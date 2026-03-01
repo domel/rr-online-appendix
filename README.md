@@ -25,6 +25,10 @@ rapid_review_online_appendix/
 │   ├── rr_included_preliminary.csv
 │   ├── rr_maybe_candidates.csv
 │   └── rr_screening_log_deduped.csv
+├── ontology/
+│   ├── rr_ontology.ttl
+│   └── visualization/
+│       └── rr_ontology.pdf
 └── docs/
     ├── rr_background_corpus.md
     ├── rr_bibliographic_registry.md
@@ -51,9 +55,12 @@ rapid_review_online_appendix/
    - `docs/rr_prisma_counts.md`
    - `docs/rr_background_corpus.md`
    - `docs/rr_bibliographic_registry.md`
+5. Ontology artifacts:
+   - `ontology/rr_ontology.ttl`
+   - `ontology/visualization/rr_ontology.pdf`
 
 ## Notes
 
 - This appendix package is assembled from the working project files; original source files remain in their original locations.
 - `rr_references.bib` and `rr_references_corrected_full.bib` are currently identical.
-- At this stage, `main.tex` is intentionally unchanged.
+- Ontology artifacts include a machine-readable Turtle file and a PDF visualization.

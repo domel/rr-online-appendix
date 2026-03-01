@@ -1,0 +1,2021 @@
+@prefix rr: <https://w3id.org/rapid-review/graph-schema/ontology#> .
+@prefix inst: <https://w3id.org/rapid-review/graph-schema/instance/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+
+rr:GraphSchemaRapidReviewOntology a owl:Ontology ;
+  dct:title "Graph Schema Rapid Review Ontology" ;
+  dct:description "Ontology induced from 83 rapid-review records on schema languages and integrity constraints for graph databases." ;
+  dct:created "2026-03-01"^^xsd:date ;
+  dct:source "rr_data_extraction_filled.csv" .
+
+### Core classes
+rr:Publication a owl:Class ; rdfs:label "Publication" .
+rr:ApproachFamily a owl:Class ; rdfs:label "Approach family" .
+rr:ApproachSubClass a owl:Class ; rdfs:label "Approach subclass" .
+rr:ModelTarget a owl:Class ; rdfs:label "Model target" .
+rr:Mechanism a owl:Class ; rdfs:label "Language/mechanism" .
+rr:SupportLevel a owl:Class ; rdfs:label "Support level" .
+
+### Object properties
+rr:hasApproachFamily a owl:ObjectProperty, owl:FunctionalProperty ;
+  rdfs:domain rr:Publication ; rdfs:range rr:ApproachFamily ; rdfs:label "has approach family" .
+rr:hasApproachSubClass a owl:ObjectProperty, owl:FunctionalProperty ;
+  rdfs:domain rr:Publication ; rdfs:range rr:ApproachSubClass ; rdfs:label "has approach subclass" .
+rr:targetsModel a owl:ObjectProperty, owl:FunctionalProperty ;
+  rdfs:domain rr:Publication ; rdfs:range rr:ModelTarget ; rdfs:label "targets model" .
+rr:usesMechanism a owl:ObjectProperty, owl:FunctionalProperty ;
+  rdfs:domain rr:Publication ; rdfs:range rr:Mechanism ; rdfs:label "uses mechanism" .
+rr:belongsToFamily a owl:ObjectProperty ;
+  rdfs:domain rr:ApproachSubClass ; rdfs:range rr:ApproachFamily ; rdfs:label "belongs to family" .
+
+rr:hasTypingNodeSupport a owl:ObjectProperty ; rdfs:domain rr:Publication ; rdfs:range rr:SupportLevel .
+rr:hasCardinalitySupport a owl:ObjectProperty ; rdfs:domain rr:Publication ; rdfs:range rr:SupportLevel .
+rr:hasValueConstraintSupport a owl:ObjectProperty ; rdfs:domain rr:Publication ; rdfs:range rr:SupportLevel .
+rr:hasKeySupport a owl:ObjectProperty ; rdfs:domain rr:Publication ; rdfs:range rr:SupportLevel .
+rr:hasPathConstraintSupport a owl:ObjectProperty ; rdfs:domain rr:Publication ; rdfs:range rr:SupportLevel .
+rr:hasRecursionSupport a owl:ObjectProperty ; rdfs:domain rr:Publication ; rdfs:range rr:SupportLevel .
+rr:hasImplementationSupport a owl:ObjectProperty ; rdfs:domain rr:Publication ; rdfs:range rr:SupportLevel .
+rr:hasEvaluationSupport a owl:ObjectProperty ; rdfs:domain rr:Publication ; rdfs:range rr:SupportLevel .
+
+### Datatype properties
+rr:recordId a owl:DatatypeProperty ; rdfs:domain rr:Publication ; rdfs:range xsd:string .
+rr:title a owl:DatatypeProperty ; rdfs:domain rr:Publication ; rdfs:range xsd:string .
+rr:publicationYear a owl:DatatypeProperty ; rdfs:domain rr:Publication ; rdfs:range xsd:gYear .
+rr:venue a owl:DatatypeProperty ; rdfs:domain rr:Publication ; rdfs:range xsd:string .
+rr:publicationType a owl:DatatypeProperty ; rdfs:domain rr:Publication ; rdfs:range xsd:string .
+rr:doi a owl:DatatypeProperty ; rdfs:domain rr:Publication ; rdfs:range xsd:string .
+rr:url a owl:DatatypeProperty ; rdfs:domain rr:Publication ; rdfs:range xsd:anyURI .
+rr:qualityTheoryScore a owl:DatatypeProperty ; rdfs:domain rr:Publication ; rdfs:range xsd:integer .
+rr:qualitySystemScore a owl:DatatypeProperty ; rdfs:domain rr:Publication ; rdfs:range xsd:integer .
+
+### Axioms
+rr:Publication rdfs:subClassOf
+  [ a owl:Restriction ; owl:onProperty rr:hasApproachFamily ; owl:someValuesFrom rr:ApproachFamily ],
+  [ a owl:Restriction ; owl:onProperty rr:hasApproachSubClass ; owl:someValuesFrom rr:ApproachSubClass ],
+  [ a owl:Restriction ; owl:onProperty rr:targetsModel ; owl:someValuesFrom rr:ModelTarget ],
+  [ a owl:Restriction ; owl:onProperty rr:usesMechanism ; owl:someValuesFrom rr:Mechanism ] .
+
+### Support levels
+rr:YesSupport a rr:SupportLevel ; rdfs:label "Yes" .
+rr:PartialSupport a rr:SupportLevel ; rdfs:label "Partial" .
+rr:MixedSupport a rr:SupportLevel ; rdfs:label "Mixed" .
+rr:NoSupport a rr:SupportLevel ; rdfs:label "No" .
+rr:NotSpecifiedSupport a rr:SupportLevel ; rdfs:label "Not specified" .
+
+### Approach family individuals
+rr:SemanticSchemaFamily a rr:ApproachFamily ; rdfs:label "Semantic schema" .
+rr:ShapesConstraintsFamily a rr:ApproachFamily ; rdfs:label "Shapes / constraints" .
+rr:DependenciesICFamily a rr:ApproachFamily ; rdfs:label "Dependencies / IC" .
+rr:GraphQLReferenceFamily a rr:ApproachFamily ; rdfs:label "GraphQL reference" .
+rr:OtherUnknownFamily a rr:ApproachFamily ; rdfs:label "Other / unknown" .
+
+### Model target individuals
+rr:RDFTarget a rr:ModelTarget ; rdfs:label "RDF" .
+rr:PropertyGraphTarget a rr:ModelTarget ; rdfs:label "Property graphs" .
+rr:GraphQLTarget a rr:ModelTarget ; rdfs:label "GraphQL" .
+rr:OtherUnknownTarget a rr:ModelTarget ; rdfs:label "Other / unknown" .
+
+### Corpus individual
+inst:Corpus83 a rr:Publication ;
+  rr:recordId "CORPUS" ;
+  rr:title "Rapid review corpus aggregate" ;
+  rr:publicationYear "2026"^^xsd:gYear ;
+  rr:venue "Derived from rr_data_extraction_filled.csv" ;
+  rr:publicationType "DatasetAggregate" .
+
+### Approach subclass individuals
+rr:ApproachSubClass_fd_to_pg_schema a rr:ApproachSubClass ;
+  rdfs:label "fd to pg schema" ;
+  rr:belongsToFamily rr:DependenciesICFamily .
+
+rr:ApproachSubClass_gfd_fd a rr:ApproachSubClass ;
+  rdfs:label "gfd fd" ;
+  rr:belongsToFamily rr:DependenciesICFamily .
+
+rr:ApproachSubClass_ggds a rr:ApproachSubClass ;
+  rdfs:label "ggds" ;
+  rr:belongsToFamily rr:DependenciesICFamily .
+
+rr:ApproachSubClass_graphdependencies a rr:ApproachSubClass ;
+  rdfs:label "graphdependencies" ;
+  rr:belongsToFamily rr:DependenciesICFamily .
+
+rr:ApproachSubClass_graphql a rr:ApproachSubClass ;
+  rdfs:label "graphql" ;
+  rr:belongsToFamily rr:GraphQLReferenceFamily .
+
+rr:ApproachSubClass_graphschema a rr:ApproachSubClass ;
+  rdfs:label "graphschema" ;
+  rr:belongsToFamily rr:ShapesConstraintsFamily .
+
+rr:ApproachSubClass_integrityconstraints a rr:ApproachSubClass ;
+  rdfs:label "integrityconstraints" ;
+  rr:belongsToFamily rr:DependenciesICFamily .
+
+rr:ApproachSubClass_owl_rdfs a rr:ApproachSubClass ;
+  rdfs:label "owl rdfs" ;
+  rr:belongsToFamily rr:SemanticSchemaFamily .
+
+rr:ApproachSubClass_pg_keys a rr:ApproachSubClass ;
+  rdfs:label "pg keys" ;
+  rr:belongsToFamily rr:DependenciesICFamily .
+
+rr:ApproachSubClass_pg_schema a rr:ApproachSubClass ;
+  rdfs:label "pg schema" ;
+  rr:belongsToFamily rr:ShapesConstraintsFamily .
+
+rr:ApproachSubClass_rdfconstraints a rr:ApproachSubClass ;
+  rdfs:label "rdfconstraints" ;
+  rr:belongsToFamily rr:ShapesConstraintsFamily .
+
+rr:ApproachSubClass_shacl a rr:ApproachSubClass ;
+  rdfs:label "shacl" ;
+  rr:belongsToFamily rr:ShapesConstraintsFamily .
+
+rr:ApproachSubClass_shex a rr:ApproachSubClass ;
+  rdfs:label "shex" ;
+  rr:belongsToFamily rr:ShapesConstraintsFamily .
+
+rr:ApproachSubClass_unspecified a rr:ApproachSubClass ;
+  rdfs:label "unspecified" ;
+  rr:belongsToFamily rr:ShapesConstraintsFamily .
+
+### Mechanism individuals
+rr:Mechanism_gfd_fd a rr:Mechanism ; rdfs:label "gfd fd" .
+rr:Mechanism_ggds a rr:Mechanism ; rdfs:label "ggds" .
+rr:Mechanism_graphdependencies a rr:Mechanism ; rdfs:label "graphdependencies" .
+rr:Mechanism_graphql a rr:Mechanism ; rdfs:label "graphql" .
+rr:Mechanism_graphschema a rr:Mechanism ; rdfs:label "graphschema" .
+rr:Mechanism_integrityconstraints a rr:Mechanism ; rdfs:label "integrityconstraints" .
+rr:Mechanism_owl_rdfs a rr:Mechanism ; rdfs:label "owl rdfs" .
+rr:Mechanism_pg_keys a rr:Mechanism ; rdfs:label "pg keys" .
+rr:Mechanism_pg_schema a rr:Mechanism ; rdfs:label "pg schema" .
+rr:Mechanism_rdfconstraints a rr:Mechanism ; rdfs:label "rdfconstraints" .
+rr:Mechanism_shacl a rr:Mechanism ; rdfs:label "shacl" .
+rr:Mechanism_shex a rr:Mechanism ; rdfs:label "shex" .
+rr:Mechanism_unspecified a rr:Mechanism ; rdfs:label "unspecified" .
+
+### Publication individuals
+inst:Publication_s001 a rr:Publication
+  ; rr:recordId "S001"
+  ; rr:title "Graph functional dependencies: Analysis and translation to PG-schema"
+  ; rr:publicationYear "2026"^^xsd:gYear
+  ; rr:venue "Information Systems"
+  ; rr:publicationType "Article"
+  ; rr:hasApproachFamily rr:DependenciesICFamily
+  ; rr:hasApproachSubClass rr:ApproachSubClass_fd_to_pg_schema
+  ; rr:targetsModel rr:PropertyGraphTarget
+  ; rr:usesMechanism rr:Mechanism_gfd_fd
+  ; rr:hasTypingNodeSupport rr:PartialSupport
+  ; rr:hasCardinalitySupport rr:PartialSupport
+  ; rr:hasValueConstraintSupport rr:PartialSupport
+  ; rr:hasKeySupport rr:YesSupport
+  ; rr:hasPathConstraintSupport rr:PartialSupport
+  ; rr:hasRecursionSupport rr:NoSupport
+  ; rr:hasImplementationSupport rr:NotSpecifiedSupport
+  ; rr:hasEvaluationSupport rr:NoSupport
+  ; rr:doi "10.1016/j.is.2025.102633"
+  ; rr:url "https://doi.org/10.1016/j.is.2025.102633"^^xsd:anyURI
+  ; rr:qualityTheoryScore 2
+  ; rr:qualitySystemScore 0 .
+
+inst:Publication_s002 a rr:Publication
+  ; rr:recordId "S002"
+  ; rr:title "SHACL Dashboard: Analyzing Data Quality Reports Over Large-Scale Knowledge Graphs"
+  ; rr:publicationYear "2026"^^xsd:gYear
+  ; rr:venue "Lecture Notes in Computer Science"
+  ; rr:publicationType "Conference paper"
+  ; rr:hasApproachFamily rr:ShapesConstraintsFamily
+  ; rr:hasApproachSubClass rr:ApproachSubClass_shacl
+  ; rr:targetsModel rr:RDFTarget
+  ; rr:usesMechanism rr:Mechanism_shacl
+  ; rr:hasTypingNodeSupport rr:YesSupport
+  ; rr:hasCardinalitySupport rr:YesSupport
+  ; rr:hasValueConstraintSupport rr:YesSupport
+  ; rr:hasKeySupport rr:PartialSupport
+  ; rr:hasPathConstraintSupport rr:YesSupport
+  ; rr:hasRecursionSupport rr:PartialSupport
+  ; rr:hasImplementationSupport rr:PartialSupport
+  ; rr:hasEvaluationSupport rr:YesSupport
+  ; rr:doi "10.1007/978-3-032-09530-5_6"
+  ; rr:url "https://doi.org/10.1007/978-3-032-09530-5_6"^^xsd:anyURI
+  ; rr:qualityTheoryScore 0
+  ; rr:qualitySystemScore 0 .
+
+inst:Publication_s003 a rr:Publication
+  ; rr:recordId "S003"
+  ; rr:title "ShEx2SPARQL: Translating Shape Expressions into SPARQL Queries"
+  ; rr:publicationYear "2026"^^xsd:gYear
+  ; rr:venue "Lecture Notes in Computer Science"
+  ; rr:publicationType "Conference paper"
+  ; rr:hasApproachFamily rr:ShapesConstraintsFamily
+  ; rr:hasApproachSubClass rr:ApproachSubClass_shex
+  ; rr:targetsModel rr:RDFTarget
+  ; rr:usesMechanism rr:Mechanism_shex
+  ; rr:hasTypingNodeSupport rr:YesSupport
+  ; rr:hasCardinalitySupport rr:YesSupport
+  ; rr:hasValueConstraintSupport rr:YesSupport
+  ; rr:hasKeySupport rr:NoSupport
+  ; rr:hasPathConstraintSupport rr:NoSupport
+  ; rr:hasRecursionSupport rr:YesSupport
+  ; rr:hasImplementationSupport rr:PartialSupport
+  ; rr:hasEvaluationSupport rr:NoSupport
+  ; rr:doi "10.1007/978-3-031-97207-2_16"
+  ; rr:url "https://doi.org/10.1007/978-3-031-97207-2_16"^^xsd:anyURI
+  ; rr:qualityTheoryScore 0
+  ; rr:qualitySystemScore 0 .
+
+inst:Publication_s004 a rr:Publication
+  ; rr:recordId "S004"
+  ; rr:title "On Property Constraints in PG-Schema"
+  ; rr:publicationYear "2025"^^xsd:gYear
+  ; rr:venue "K-CAP 2025 - Proceedings of the 13th Knowledge Capture Conference 2025"
+  ; rr:publicationType "Conference paper"
+  ; rr:hasApproachFamily rr:ShapesConstraintsFamily
+  ; rr:hasApproachSubClass rr:ApproachSubClass_pg_schema
+  ; rr:targetsModel rr:PropertyGraphTarget
+  ; rr:usesMechanism rr:Mechanism_pg_schema
+  ; rr:hasTypingNodeSupport rr:YesSupport
+  ; rr:hasCardinalitySupport rr:YesSupport
+  ; rr:hasValueConstraintSupport rr:PartialSupport
+  ; rr:hasKeySupport rr:PartialSupport
+  ; rr:hasPathConstraintSupport rr:NoSupport
+  ; rr:hasRecursionSupport rr:NoSupport
+  ; rr:hasImplementationSupport rr:NotSpecifiedSupport
+  ; rr:hasEvaluationSupport rr:NoSupport
+  ; rr:doi "10.1145/3731443.3771349"
+  ; rr:url "https://doi.org/10.1145/3731443.3771349"^^xsd:anyURI
+  ; rr:qualityTheoryScore 1
+  ; rr:qualitySystemScore 0 .
+
+inst:Publication_s005 a rr:Publication
+  ; rr:recordId "S005"
+  ; rr:title "Lessons Learned from the Combined Development of OWL and SHACL"
+  ; rr:publicationYear "2025"^^xsd:gYear
+  ; rr:venue "K-CAP 2025 - Proceedings of the 13th Knowledge Capture Conference 2025"
+  ; rr:publicationType "Conference paper"
+  ; rr:hasApproachFamily rr:SemanticSchemaFamily
+  ; rr:hasApproachSubClass rr:ApproachSubClass_owl_rdfs
+  ; rr:targetsModel rr:RDFTarget
+  ; rr:usesMechanism rr:Mechanism_owl_rdfs
+  ; rr:hasTypingNodeSupport rr:YesSupport
+  ; rr:hasCardinalitySupport rr:PartialSupport
+  ; rr:hasValueConstraintSupport rr:PartialSupport
+  ; rr:hasKeySupport rr:PartialSupport
+  ; rr:hasPathConstraintSupport rr:PartialSupport
+  ; rr:hasRecursionSupport rr:PartialSupport
+  ; rr:hasImplementationSupport rr:PartialSupport
+  ; rr:hasEvaluationSupport rr:NoSupport
+  ; rr:doi "10.1145/3731443.3771340"
+  ; rr:url "https://doi.org/10.1145/3731443.3771340"^^xsd:anyURI
+  ; rr:qualityTheoryScore 0
+  ; rr:qualitySystemScore 0 .
+
+inst:Publication_s006 a rr:Publication
+  ; rr:recordId "S006"
+  ; rr:title "Transforming SHACL Shape Graphs into HTML Applications for Populating Knowledge Graphs"
+  ; rr:publicationYear "2025"^^xsd:gYear
+  ; rr:venue "Digital"
+  ; rr:publicationType "Article"
+  ; rr:hasApproachFamily rr:ShapesConstraintsFamily
+  ; rr:hasApproachSubClass rr:ApproachSubClass_shacl
+  ; rr:targetsModel rr:RDFTarget
+  ; rr:usesMechanism rr:Mechanism_shacl
+  ; rr:hasTypingNodeSupport rr:YesSupport
+  ; rr:hasCardinalitySupport rr:YesSupport
+  ; rr:hasValueConstraintSupport rr:YesSupport
+  ; rr:hasKeySupport rr:PartialSupport
+  ; rr:hasPathConstraintSupport rr:YesSupport
+  ; rr:hasRecursionSupport rr:PartialSupport
+  ; rr:hasImplementationSupport rr:YesSupport
+  ; rr:hasEvaluationSupport rr:YesSupport
+  ; rr:doi "10.3390/digital5040056"
+  ; rr:url "https://doi.org/10.3390/digital5040056"^^xsd:anyURI
+  ; rr:qualityTheoryScore 0
+  ; rr:qualitySystemScore 2 .
+
+inst:Publication_s007 a rr:Publication
+  ; rr:recordId "S007"
+  ; rr:title "A property graph schema for automated metadata capture, reproducibility and knowledge discovery in high-throughput bioprocess development"
+  ; rr:publicationYear "2025"^^xsd:gYear
+  ; rr:venue "Digital Discovery"
+  ; rr:publicationType "Article"
+  ; rr:hasApproachFamily rr:ShapesConstraintsFamily
+  ; rr:hasApproachSubClass rr:ApproachSubClass_pg_schema
+  ; rr:targetsModel rr:PropertyGraphTarget
+  ; rr:usesMechanism rr:Mechanism_pg_schema
+  ; rr:hasTypingNodeSupport rr:YesSupport
+  ; rr:hasCardinalitySupport rr:YesSupport
+  ; rr:hasValueConstraintSupport rr:PartialSupport
+  ; rr:hasKeySupport rr:PartialSupport
+  ; rr:hasPathConstraintSupport rr:NoSupport
+  ; rr:hasRecursionSupport rr:NoSupport
+  ; rr:hasImplementationSupport rr:NotSpecifiedSupport
+  ; rr:hasEvaluationSupport rr:NoSupport
+  ; rr:doi "10.1039/d5dd00070j"
+  ; rr:url "https://doi.org/10.1039/d5dd00070j"^^xsd:anyURI
+  ; rr:qualityTheoryScore 1
+  ; rr:qualitySystemScore 0 .
+
+inst:Publication_s008 a rr:Publication
+  ; rr:recordId "S008"
+  ; rr:title "Encoding Archaeological Data Models as Wikidata Schemas: Utilizing Shape Expressions to Structure Collaborative Linked Open Data for Digital Storytelling Within the International Dura-Europos Archive"
+  ; rr:publicationYear "2025"^^xsd:gYear
+  ; rr:venue "International Journal of Technology, Knowledge and Society"
+  ; rr:publicationType "Article"
+  ; rr:hasApproachFamily rr:ShapesConstraintsFamily
+  ; rr:hasApproachSubClass rr:ApproachSubClass_shex
+  ; rr:targetsModel rr:RDFTarget
+  ; rr:usesMechanism rr:Mechanism_shex
+  ; rr:hasTypingNodeSupport rr:YesSupport
+  ; rr:hasCardinalitySupport rr:YesSupport
+  ; rr:hasValueConstraintSupport rr:YesSupport
+  ; rr:hasKeySupport rr:NoSupport
+  ; rr:hasPathConstraintSupport rr:NoSupport
+  ; rr:hasRecursionSupport rr:YesSupport
+  ; rr:hasImplementationSupport rr:PartialSupport
+  ; rr:hasEvaluationSupport rr:NoSupport
+  ; rr:doi "10.18848/1832-3669/cgp/v21i01/69-83"
+  ; rr:url "https://doi.org/10.18848/1832-3669/cgp/v21i01/69-83"^^xsd:anyURI
+  ; rr:qualityTheoryScore 1
+  ; rr:qualitySystemScore 0 .
+
+inst:Publication_s009 a rr:Publication
+  ; rr:recordId "S009"
+  ; rr:title "PASCAL: A Theory-Informed Visual Interface for Property Graph Schema Visualization"
+  ; rr:publicationYear "2025"^^xsd:gYear
+  ; rr:venue "Proceedings of the ACM SIGMOD International Conference on Management of Data"
+  ; rr:publicationType "Conference paper"
+  ; rr:hasApproachFamily rr:ShapesConstraintsFamily
+  ; rr:hasApproachSubClass rr:ApproachSubClass_pg_schema
+  ; rr:targetsModel rr:PropertyGraphTarget
+  ; rr:usesMechanism rr:Mechanism_pg_schema
+  ; rr:hasTypingNodeSupport rr:YesSupport
+  ; rr:hasCardinalitySupport rr:YesSupport
+  ; rr:hasValueConstraintSupport rr:PartialSupport
+  ; rr:hasKeySupport rr:PartialSupport
+  ; rr:hasPathConstraintSupport rr:NoSupport
+  ; rr:hasRecursionSupport rr:NoSupport
+  ; rr:hasImplementationSupport rr:NotSpecifiedSupport
+  ; rr:hasEvaluationSupport rr:YesSupport
+  ; rr:doi "10.1145/3722212.3725123"
+  ; rr:url "https://doi.org/10.1145/3722212.3725123"^^xsd:anyURI
+  ; rr:qualityTheoryScore 2
+  ; rr:qualitySystemScore 2 .
+
+inst:Publication_s010 a rr:Publication
+  ; rr:recordId "S010"
+  ; rr:title "Common Foundations for SHACL, ShEx, and PG-Schema"
+  ; rr:publicationYear "2025"^^xsd:gYear
+  ; rr:venue "WWW 2025 - Proceedings of the ACM Web Conference"
+  ; rr:publicationType "Conference paper"
+  ; rr:hasApproachFamily rr:ShapesConstraintsFamily
+  ; rr:hasApproachSubClass rr:ApproachSubClass_shacl
+  ; rr:targetsModel rr:RDFTarget
+  ; rr:usesMechanism rr:Mechanism_shacl
+  ; rr:hasTypingNodeSupport rr:YesSupport
+  ; rr:hasCardinalitySupport rr:YesSupport
+  ; rr:hasValueConstraintSupport rr:YesSupport
+  ; rr:hasKeySupport rr:PartialSupport
+  ; rr:hasPathConstraintSupport rr:YesSupport
+  ; rr:hasRecursionSupport rr:PartialSupport
+  ; rr:hasImplementationSupport rr:PartialSupport
+  ; rr:hasEvaluationSupport rr:NoSupport
+  ; rr:doi "10.1145/3696410.3714694"
+  ; rr:url "https://doi.org/10.1145/3696410.3714694"^^xsd:anyURI
+  ; rr:qualityTheoryScore 2
+  ; rr:qualitySystemScore 0 .
+
+inst:Publication_s011 a rr:Publication
+  ; rr:recordId "S011"
+  ; rr:title "SCOOP-UI: SHACL Shape Extraction in Just a Click!"
+  ; rr:publicationYear "2025"^^xsd:gYear
+  ; rr:venue "Lecture Notes in Computer Science (including subseries Lecture Notes in Artificial Intelligence and Lecture Notes in Bioinformatics)"
+  ; rr:publicationType "Conference paper"
+  ; rr:hasApproachFamily rr:ShapesConstraintsFamily
+  ; rr:hasApproachSubClass rr:ApproachSubClass_shacl
+  ; rr:targetsModel rr:RDFTarget
+  ; rr:usesMechanism rr:Mechanism_shacl
+  ; rr:hasTypingNodeSupport rr:YesSupport
+  ; rr:hasCardinalitySupport rr:YesSupport
+  ; rr:hasValueConstraintSupport rr:YesSupport
+  ; rr:hasKeySupport rr:PartialSupport
+  ; rr:hasPathConstraintSupport rr:YesSupport
+  ; rr:hasRecursionSupport rr:PartialSupport
+  ; rr:hasImplementationSupport rr:YesSupport
+  ; rr:hasEvaluationSupport rr:YesSupport
+  ; rr:doi "10.1007/978-3-031-78952-6_26"
+  ; rr:url "https://doi.org/10.1007/978-3-031-78952-6_26"^^xsd:anyURI
+  ; rr:qualityTheoryScore 0
+  ; rr:qualitySystemScore 2 .
+
+inst:Publication_s012 a rr:Publication
+  ; rr:recordId "S012"
+  ; rr:title "Interactive Analysis of Knowledge Graph Validation Results with the SHACL Dashboard"
+  ; rr:publicationYear "2025"^^xsd:gYear
+  ; rr:venue "CEUR Workshop Proceedings"
+  ; rr:publicationType "Conference paper"
+  ; rr:hasApproachFamily rr:ShapesConstraintsFamily
+  ; rr:hasApproachSubClass rr:ApproachSubClass_shacl
+  ; rr:targetsModel rr:RDFTarget
+  ; rr:usesMechanism rr:Mechanism_shacl
+  ; rr:hasTypingNodeSupport rr:YesSupport
+  ; rr:hasCardinalitySupport rr:YesSupport
+  ; rr:hasValueConstraintSupport rr:YesSupport
+  ; rr:hasKeySupport rr:PartialSupport
+  ; rr:hasPathConstraintSupport rr:YesSupport
+  ; rr:hasRecursionSupport rr:PartialSupport
+  ; rr:hasImplementationSupport rr:YesSupport
+  ; rr:hasEvaluationSupport rr:YesSupport
+  ; rr:url "https://www.scopus.com/inward/record.uri?eid=2-s2.0-105022444248&partnerID=40&md5=69eefaccae1419a4c2148efe77ab15cf"^^xsd:anyURI
+  ; rr:qualityTheoryScore 2
+  ; rr:qualitySystemScore 0 .
+
+inst:Publication_s013 a rr:Publication
+  ; rr:recordId "S013"
+  ; rr:title "SHACLEval \u2013 A Quality Framework for the Shapes Constraint Language"
+  ; rr:publicationYear "2025"^^xsd:gYear
+  ; rr:venue "CEUR Workshop Proceedings"
+  ; rr:publicationType "Conference paper"
+  ; rr:hasApproachFamily rr:ShapesConstraintsFamily
+  ; rr:hasApproachSubClass rr:ApproachSubClass_shacl
+  ; rr:targetsModel rr:RDFTarget
+  ; rr:usesMechanism rr:Mechanism_shacl
+  ; rr:hasTypingNodeSupport rr:YesSupport
+  ; rr:hasCardinalitySupport rr:YesSupport
+  ; rr:hasValueConstraintSupport rr:YesSupport
+  ; rr:hasKeySupport rr:PartialSupport
+  ; rr:hasPathConstraintSupport rr:YesSupport
+  ; rr:hasRecursionSupport rr:PartialSupport
+  ; rr:hasImplementationSupport rr:YesSupport
+  ; rr:hasEvaluationSupport rr:YesSupport
+  ; rr:url "https://www.scopus.com/inward/record.uri?eid=2-s2.0-105019647042&partnerID=40&md5=76601e25d376cd08d606caccc5f96b4c"^^xsd:anyURI
+  ; rr:qualityTheoryScore 2
+  ; rr:qualitySystemScore 2 .
+
+inst:Publication_s014 a rr:Publication
+  ; rr:recordId "S014"
+  ; rr:title "Research on Mapping Rules of MDR2023 Meta-Model to OWL and Its Application in Ontology Generation in the Petroleum Field"
+  ; rr:publicationYear "2025"^^xsd:gYear
+  ; rr:venue "2025 10th International Conference on Intelligent Computing and Signal Processing, ICSP 2025"
+  ; rr:publicationType "Conference paper"
+  ; rr:hasApproachFamily rr:SemanticSchemaFamily
+  ; rr:hasApproachSubClass rr:ApproachSubClass_owl_rdfs
+  ; rr:targetsModel rr:RDFTarget
+  ; rr:usesMechanism rr:Mechanism_owl_rdfs
+  ; rr:hasTypingNodeSupport rr:YesSupport
+  ; rr:hasCardinalitySupport rr:PartialSupport
+  ; rr:hasValueConstraintSupport rr:PartialSupport
+  ; rr:hasKeySupport rr:PartialSupport
+  ; rr:hasPathConstraintSupport rr:PartialSupport
+  ; rr:hasRecursionSupport rr:PartialSupport
+  ; rr:hasImplementationSupport rr:PartialSupport
+  ; rr:hasEvaluationSupport rr:YesSupport
+  ; rr:doi "10.1109/icsp65755.2025.11086887"
+  ; rr:url "https://doi.org/10.1109/icsp65755.2025.11086887"^^xsd:anyURI
+  ; rr:qualityTheoryScore 0
+  ; rr:qualitySystemScore 2 .
+
+inst:Publication_s015 a rr:Publication
+  ; rr:recordId "S015"
+  ; rr:title "A SHACL-based Data Consistency Solution for Contract Compliance Verification"
+  ; rr:publicationYear "2025"^^xsd:gYear
+  ; rr:venue "CEUR Workshop Proceedings"
+  ; rr:publicationType "Conference paper"
+  ; rr:hasApproachFamily rr:ShapesConstraintsFamily
+  ; rr:hasApproachSubClass rr:ApproachSubClass_shacl
+  ; rr:targetsModel rr:RDFTarget
+  ; rr:usesMechanism rr:Mechanism_shacl
+  ; rr:hasTypingNodeSupport rr:YesSupport
+  ; rr:hasCardinalitySupport rr:YesSupport
+  ; rr:hasValueConstraintSupport rr:YesSupport
+  ; rr:hasKeySupport rr:PartialSupport
+  ; rr:hasPathConstraintSupport rr:YesSupport
+  ; rr:hasRecursionSupport rr:PartialSupport
+  ; rr:hasImplementationSupport rr:PartialSupport
+  ; rr:hasEvaluationSupport rr:NoSupport
+  ; rr:url "https://www.scopus.com/inward/record.uri?eid=2-s2.0-105008490546&partnerID=40&md5=62677dda7b8fa19d0fa30a3736cb6fb1"^^xsd:anyURI
+  ; rr:qualityTheoryScore 0
+  ; rr:qualitySystemScore 0 .
+
+inst:Publication_s016 a rr:Publication
+  ; rr:recordId "S016"
+  ; rr:title "OCASP OWL Class Axiom Score Predictor with Active Learning"
+  ; rr:publicationYear "2025"^^xsd:gYear
+  ; rr:venue "Lecture Notes in Computer Science"
+  ; rr:publicationType "Conference paper"
+  ; rr:hasApproachFamily rr:SemanticSchemaFamily
+  ; rr:hasApproachSubClass rr:ApproachSubClass_owl_rdfs
+  ; rr:targetsModel rr:RDFTarget
+  ; rr:usesMechanism rr:Mechanism_owl_rdfs
+  ; rr:hasTypingNodeSupport rr:YesSupport
+  ; rr:hasCardinalitySupport rr:PartialSupport
+  ; rr:hasValueConstraintSupport rr:PartialSupport
+  ; rr:hasKeySupport rr:PartialSupport
+  ; rr:hasPathConstraintSupport rr:PartialSupport
+  ; rr:hasRecursionSupport rr:PartialSupport
+  ; rr:hasImplementationSupport rr:PartialSupport
+  ; rr:hasEvaluationSupport rr:NoSupport
+  ; rr:doi "10.1007/978-3-031-87327-0_19"
+  ; rr:url "https://doi.org/10.1007/978-3-031-87327-0_19"^^xsd:anyURI
+  ; rr:qualityTheoryScore 0
+  ; rr:qualitySystemScore 0 .
+
+inst:Publication_s017 a rr:Publication
+  ; rr:recordId "S017"
+  ; rr:title "OWLstrict: A Constrained OWL Fragment to Avoid Ambiguities for Knowledge Graph Practitioners"
+  ; rr:publicationYear "2025"^^xsd:gYear
+  ; rr:venue "Lecture Notes in Computer Science"
+  ; rr:publicationType "Conference paper"
+  ; rr:hasApproachFamily rr:SemanticSchemaFamily
+  ; rr:hasApproachSubClass rr:ApproachSubClass_owl_rdfs
+  ; rr:targetsModel rr:RDFTarget
+  ; rr:usesMechanism rr:Mechanism_owl_rdfs
+  ; rr:hasTypingNodeSupport rr:YesSupport
+  ; rr:hasCardinalitySupport rr:PartialSupport
+  ; rr:hasValueConstraintSupport rr:PartialSupport
+  ; rr:hasKeySupport rr:PartialSupport
+  ; rr:hasPathConstraintSupport rr:PartialSupport
+  ; rr:hasRecursionSupport rr:PartialSupport
+  ; rr:hasImplementationSupport rr:PartialSupport
+  ; rr:hasEvaluationSupport rr:YesSupport
+  ; rr:doi "10.1007/978-3-031-94578-6_3"
+  ; rr:url "https://doi.org/10.1007/978-3-031-94578-6_3"^^xsd:anyURI
+  ; rr:qualityTheoryScore 0
+  ; rr:qualitySystemScore 2 .
+
+inst:Publication_s018 a rr:Publication
+  ; rr:recordId "S018"
+  ; rr:title "Discovering Graph Generating Dependencies for Property Graph Profiling"
+  ; rr:publicationYear "2024"^^xsd:gYear
+  ; rr:venue "International Conference on Information and Knowledge Management, Proceedings"
+  ; rr:publicationType "Conference paper"
+  ; rr:hasApproachFamily rr:DependenciesICFamily
+  ; rr:hasApproachSubClass rr:ApproachSubClass_ggds
+  ; rr:targetsModel rr:PropertyGraphTarget
+  ; rr:usesMechanism rr:Mechanism_ggds
+  ; rr:hasTypingNodeSupport rr:PartialSupport
+  ; rr:hasCardinalitySupport rr:PartialSupport
+  ; rr:hasValueConstraintSupport rr:PartialSupport
+  ; rr:hasKeySupport rr:PartialSupport
+  ; rr:hasPathConstraintSupport rr:YesSupport
+  ; rr:hasRecursionSupport rr:NoSupport
+  ; rr:hasImplementationSupport rr:NotSpecifiedSupport
+  ; rr:hasEvaluationSupport rr:NoSupport
+  ; rr:doi "10.1145/3627673.3679764"
+  ; rr:url "https://doi.org/10.1145/3627673.3679764"^^xsd:anyURI
+  ; rr:qualityTheoryScore 1
+  ; rr:qualitySystemScore 0 .
+
+inst:Publication_s019 a rr:Publication
+  ; rr:recordId "S019"
+  ; rr:title "On measuring inconsistency in graph databases with regular path constraints"
+  ; rr:publicationYear "2024"^^xsd:gYear
+  ; rr:venue "Artificial Intelligence"
+  ; rr:publicationType "Article"
+  ; rr:hasApproachFamily rr:ShapesConstraintsFamily
+  ; rr:hasApproachSubClass rr:ApproachSubClass_unspecified
+  ; rr:targetsModel rr:OtherUnknownTarget
+  ; rr:usesMechanism rr:Mechanism_unspecified
+  ; rr:hasTypingNodeSupport rr:YesSupport
+  ; rr:hasCardinalitySupport rr:YesSupport
+  ; rr:hasValueConstraintSupport rr:PartialSupport
+  ; rr:hasKeySupport rr:PartialSupport
+  ; rr:hasPathConstraintSupport rr:PartialSupport
+  ; rr:hasRecursionSupport rr:NoSupport
+  ; rr:hasImplementationSupport rr:NotSpecifiedSupport
+  ; rr:hasEvaluationSupport rr:NoSupport
+  ; rr:doi "10.1016/j.artint.2024.104197"
+  ; rr:url "https://doi.org/10.1016/j.artint.2024.104197"^^xsd:anyURI
+  ; rr:qualityTheoryScore 1
+  ; rr:qualitySystemScore 0 .
+
+inst:Publication_s020 a rr:Publication
+  ; rr:recordId "S020"
+  ; rr:title "Reasoning on property graphs with graph generating dependencies"
+  ; rr:publicationYear "2024"^^xsd:gYear
+  ; rr:venue "Information Sciences"
+  ; rr:publicationType "Article"
+  ; rr:hasApproachFamily rr:DependenciesICFamily
+  ; rr:hasApproachSubClass rr:ApproachSubClass_ggds
+  ; rr:targetsModel rr:PropertyGraphTarget
+  ; rr:usesMechanism rr:Mechanism_ggds
+  ; rr:hasTypingNodeSupport rr:PartialSupport
+  ; rr:hasCardinalitySupport rr:PartialSupport
+  ; rr:hasValueConstraintSupport rr:PartialSupport
+  ; rr:hasKeySupport rr:PartialSupport
+  ; rr:hasPathConstraintSupport rr:YesSupport
+  ; rr:hasRecursionSupport rr:NoSupport
+  ; rr:hasImplementationSupport rr:NotSpecifiedSupport
+  ; rr:hasEvaluationSupport rr:NoSupport
+  ; rr:doi "10.1016/j.ins.2024.120675"
+  ; rr:url "https://doi.org/10.1016/j.ins.2024.120675"^^xsd:anyURI
+  ; rr:qualityTheoryScore 1
+  ; rr:qualitySystemScore 0 .
+
+inst:Publication_s021 a rr:Publication
+  ; rr:recordId "S021"
+  ; rr:title "Extracting shapes from large RDF data collections"
+  ; rr:publicationYear "2024"^^xsd:gYear
+  ; rr:venue "CEUR Workshop Proceedings"
+  ; rr:publicationType "Conference paper"
+  ; rr:hasApproachFamily rr:ShapesConstraintsFamily
+  ; rr:hasApproachSubClass rr:ApproachSubClass_rdfconstraints
+  ; rr:targetsModel rr:RDFTarget
+  ; rr:usesMechanism rr:Mechanism_rdfconstraints
+  ; rr:hasTypingNodeSupport rr:YesSupport
+  ; rr:hasCardinalitySupport rr:YesSupport
+  ; rr:hasValueConstraintSupport rr:PartialSupport
+  ; rr:hasKeySupport rr:PartialSupport
+  ; rr:hasPathConstraintSupport rr:NoSupport
+  ; rr:hasRecursionSupport rr:NoSupport
+  ; rr:hasImplementationSupport rr:NotSpecifiedSupport
+  ; rr:hasEvaluationSupport rr:NoSupport
+  ; rr:url "https://www.scopus.com/inward/record.uri?eid=2-s2.0-85214878952&partnerID=40&md5=fbae1804da9d6bd25eacec3c0f606e9d"^^xsd:anyURI
+  ; rr:qualityTheoryScore 0
+  ; rr:qualitySystemScore 0 .
+
+inst:Publication_s022 a rr:Publication
+  ; rr:recordId "S022"
+  ; rr:title "Consistent Query Answering over SHACL Constraints"
+  ; rr:publicationYear "2024"^^xsd:gYear
+  ; rr:venue "Proceedings of the International Conference on Knowledge Representation and Reasoning"
+  ; rr:publicationType "Conference paper"
+  ; rr:hasApproachFamily rr:ShapesConstraintsFamily
+  ; rr:hasApproachSubClass rr:ApproachSubClass_shacl
+  ; rr:targetsModel rr:RDFTarget
+  ; rr:usesMechanism rr:Mechanism_shacl
+  ; rr:hasTypingNodeSupport rr:YesSupport
+  ; rr:hasCardinalitySupport rr:YesSupport
+  ; rr:hasValueConstraintSupport rr:YesSupport
+  ; rr:hasKeySupport rr:PartialSupport
+  ; rr:hasPathConstraintSupport rr:YesSupport
+  ; rr:hasRecursionSupport rr:PartialSupport
+  ; rr:hasImplementationSupport rr:PartialSupport
+  ; rr:hasEvaluationSupport rr:NoSupport
+  ; rr:url "https://www.scopus.com/inward/record.uri?eid=2-s2.0-85214708147&partnerID=40&md5=da522bbfb4710dac5f1ec327cb0f0904"^^xsd:anyURI
+  ; rr:qualityTheoryScore 1
+  ; rr:qualitySystemScore 0 .
+
+inst:Publication_s023 a rr:Publication
+  ; rr:recordId "S023"
+  ; rr:title "SHACL Validation under the Well-founded Semantics"
+  ; rr:publicationYear "2024"^^xsd:gYear
+  ; rr:venue "Proceedings of the International Conference on Knowledge Representation and Reasoning"
+  ; rr:publicationType "Conference paper"
+  ; rr:hasApproachFamily rr:ShapesConstraintsFamily
+  ; rr:hasApproachSubClass rr:ApproachSubClass_shacl
+  ; rr:targetsModel rr:RDFTarget
+  ; rr:usesMechanism rr:Mechanism_shacl
+  ; rr:hasTypingNodeSupport rr:YesSupport
+  ; rr:hasCardinalitySupport rr:YesSupport
+  ; rr:hasValueConstraintSupport rr:YesSupport
+  ; rr:hasKeySupport rr:PartialSupport
+  ; rr:hasPathConstraintSupport rr:YesSupport
+  ; rr:hasRecursionSupport rr:PartialSupport
+  ; rr:hasImplementationSupport rr:YesSupport
+  ; rr:hasEvaluationSupport rr:NoSupport
+  ; rr:url "https://www.scopus.com/inward/record.uri?eid=2-s2.0-85214698482&partnerID=40&md5=303941cc811a6c3036398af05b8c9e51"^^xsd:anyURI
+  ; rr:qualityTheoryScore 2
+  ; rr:qualitySystemScore 0 .
+
+inst:Publication_s024 a rr:Publication
+  ; rr:recordId "S024"
+  ; rr:title "Efficient Validation of SHACL Shapes with Reasoning"
+  ; rr:publicationYear "2024"^^xsd:gYear
+  ; rr:venue "Proceedings of the VLDB Endowment"
+  ; rr:publicationType "Conference paper"
+  ; rr:hasApproachFamily rr:ShapesConstraintsFamily
+  ; rr:hasApproachSubClass rr:ApproachSubClass_shacl
+  ; rr:targetsModel rr:RDFTarget
+  ; rr:usesMechanism rr:Mechanism_shacl
+  ; rr:hasTypingNodeSupport rr:YesSupport
+  ; rr:hasCardinalitySupport rr:YesSupport
+  ; rr:hasValueConstraintSupport rr:YesSupport
+  ; rr:hasKeySupport rr:PartialSupport
+  ; rr:hasPathConstraintSupport rr:YesSupport
+  ; rr:hasRecursionSupport rr:PartialSupport
+  ; rr:hasImplementationSupport rr:YesSupport
+  ; rr:hasEvaluationSupport rr:YesSupport
+  ; rr:doi "10.14778/3681954.3682023"
+  ; rr:url "https://doi.org/10.14778/3681954.3682023"^^xsd:anyURI
+  ; rr:qualityTheoryScore 1
+  ; rr:qualitySystemScore 2 .
+
+inst:Publication_s025 a rr:Publication
+  ; rr:recordId "S025"
+  ; rr:title "Data Leakage and Validation Bypass in SHACL"
+  ; rr:publicationYear "2024"^^xsd:gYear
+  ; rr:venue "CEUR Workshop Proceedings"
+  ; rr:publicationType "Conference paper"
+  ; rr:hasApproachFamily rr:ShapesConstraintsFamily
+  ; rr:hasApproachSubClass rr:ApproachSubClass_shacl
+  ; rr:targetsModel rr:RDFTarget
+  ; rr:usesMechanism rr:Mechanism_shacl
+  ; rr:hasTypingNodeSupport rr:YesSupport
+  ; rr:hasCardinalitySupport rr:YesSupport
+  ; rr:hasValueConstraintSupport rr:YesSupport
+  ; rr:hasKeySupport rr:PartialSupport
+  ; rr:hasPathConstraintSupport rr:YesSupport
+  ; rr:hasRecursionSupport rr:PartialSupport
+  ; rr:hasImplementationSupport rr:YesSupport
+  ; rr:hasEvaluationSupport rr:NoSupport
+  ; rr:url "https://www.scopus.com/inward/record.uri?eid=2-s2.0-85204737746&partnerID=40&md5=1b97a240eb500477b6cda9773cae19d7"^^xsd:anyURI
+  ; rr:qualityTheoryScore 1
+  ; rr:qualitySystemScore 0 .
+
+inst:Publication_s026 a rr:Publication
+  ; rr:recordId "S026"
+  ; rr:title "Towards SHACL-based Knowledge Graph Transformation of Visual Domain Knowledge"
+  ; rr:publicationYear "2024"^^xsd:gYear
+  ; rr:venue "CEUR Workshop Proceedings"
+  ; rr:publicationType "Conference paper"
+  ; rr:hasApproachFamily rr:ShapesConstraintsFamily
+  ; rr:hasApproachSubClass rr:ApproachSubClass_shacl
+  ; rr:targetsModel rr:RDFTarget
+  ; rr:usesMechanism rr:Mechanism_shacl
+  ; rr:hasTypingNodeSupport rr:YesSupport
+  ; rr:hasCardinalitySupport rr:YesSupport
+  ; rr:hasValueConstraintSupport rr:YesSupport
+  ; rr:hasKeySupport rr:PartialSupport
+  ; rr:hasPathConstraintSupport rr:YesSupport
+  ; rr:hasRecursionSupport rr:PartialSupport
+  ; rr:hasImplementationSupport rr:YesSupport
+  ; rr:hasEvaluationSupport rr:NoSupport
+  ; rr:url "https://www.scopus.com/inward/record.uri?eid=2-s2.0-85204700492&partnerID=40&md5=bb32a82f9e9bdc21d720c31413d6b4c0"^^xsd:anyURI
+  ; rr:qualityTheoryScore 0
+  ; rr:qualitySystemScore 0 .
+
+inst:Publication_s027 a rr:Publication
+  ; rr:recordId "S027"
+  ; rr:title "PG-FD: Mapping Functional Dependencies to the Future Property Graph Schema Standard"
+  ; rr:publicationYear "2024"^^xsd:gYear
+  ; rr:venue "Lecture Notes in Computer Science (including subseries Lecture Notes in Artificial Intelligence and Lecture Notes in Bioinformatics)"
+  ; rr:publicationType "Conference paper"
+  ; rr:hasApproachFamily rr:DependenciesICFamily
+  ; rr:hasApproachSubClass rr:ApproachSubClass_gfd_fd
+  ; rr:targetsModel rr:PropertyGraphTarget
+  ; rr:usesMechanism rr:Mechanism_gfd_fd
+  ; rr:hasTypingNodeSupport rr:PartialSupport
+  ; rr:hasCardinalitySupport rr:PartialSupport
+  ; rr:hasValueConstraintSupport rr:PartialSupport
+  ; rr:hasKeySupport rr:YesSupport
+  ; rr:hasPathConstraintSupport rr:PartialSupport
+  ; rr:hasRecursionSupport rr:NoSupport
+  ; rr:hasImplementationSupport rr:NotSpecifiedSupport
+  ; rr:hasEvaluationSupport rr:NoSupport
+  ; rr:doi "10.1007/978-3-031-70626-4_4"
+  ; rr:url "https://doi.org/10.1007/978-3-031-70626-4_4"^^xsd:anyURI
+  ; rr:qualityTheoryScore 1
+  ; rr:qualitySystemScore 0 .
+
+inst:Publication_s028 a rr:Publication
+  ; rr:recordId "S028"
+  ; rr:title "Extending Shape Expressions for different types of knowledge graphs"
+  ; rr:publicationYear "2024"^^xsd:gYear
+  ; rr:venue "CEUR Workshop Proceedings"
+  ; rr:publicationType "Conference paper"
+  ; rr:hasApproachFamily rr:ShapesConstraintsFamily
+  ; rr:hasApproachSubClass rr:ApproachSubClass_shex
+  ; rr:targetsModel rr:RDFTarget
+  ; rr:usesMechanism rr:Mechanism_shex
+  ; rr:hasTypingNodeSupport rr:YesSupport
+  ; rr:hasCardinalitySupport rr:YesSupport
+  ; rr:hasValueConstraintSupport rr:YesSupport
+  ; rr:hasKeySupport rr:NoSupport
+  ; rr:hasPathConstraintSupport rr:NoSupport
+  ; rr:hasRecursionSupport rr:YesSupport
+  ; rr:hasImplementationSupport rr:PartialSupport
+  ; rr:hasEvaluationSupport rr:NoSupport
+  ; rr:url "https://www.scopus.com/inward/record.uri?eid=2-s2.0-85203346466&partnerID=40&md5=5dae2d874425bba0bb6c06eab06d11cb"^^xsd:anyURI
+  ; rr:qualityTheoryScore 0
+  ; rr:qualitySystemScore 0 .
+
+inst:Publication_s029 a rr:Publication
+  ; rr:recordId "S029"
+  ; rr:title "Finding the PG schema of any (semi)structured dataset: a tale of graphs and abstraction"
+  ; rr:publicationYear "2024"^^xsd:gYear
+  ; rr:venue "Proceedings - 2024 IEEE 40th International Conference on Data Engineering Workshops, ICDEW 2024"
+  ; rr:publicationType "Conference paper"
+  ; rr:hasApproachFamily rr:ShapesConstraintsFamily
+  ; rr:hasApproachSubClass rr:ApproachSubClass_pg_schema
+  ; rr:targetsModel rr:PropertyGraphTarget
+  ; rr:usesMechanism rr:Mechanism_pg_schema
+  ; rr:hasTypingNodeSupport rr:YesSupport
+  ; rr:hasCardinalitySupport rr:YesSupport
+  ; rr:hasValueConstraintSupport rr:PartialSupport
+  ; rr:hasKeySupport rr:PartialSupport
+  ; rr:hasPathConstraintSupport rr:NoSupport
+  ; rr:hasRecursionSupport rr:NoSupport
+  ; rr:hasImplementationSupport rr:NotSpecifiedSupport
+  ; rr:hasEvaluationSupport rr:NoSupport
+  ; rr:doi "10.1109/icdew61823.2024.00055"
+  ; rr:url "https://doi.org/10.1109/icdew61823.2024.00055"^^xsd:anyURI
+  ; rr:qualityTheoryScore 1
+  ; rr:qualitySystemScore 0 .
+
+inst:Publication_s030 a rr:Publication
+  ; rr:recordId "S030"
+  ; rr:title "Shape Expressions (ShEx) schemas for the FHIR R5 specification"
+  ; rr:publicationYear "2023"^^xsd:gYear
+  ; rr:venue "Journal of Biomedical Informatics"
+  ; rr:publicationType "Article"
+  ; rr:hasApproachFamily rr:ShapesConstraintsFamily
+  ; rr:hasApproachSubClass rr:ApproachSubClass_shex
+  ; rr:targetsModel rr:RDFTarget
+  ; rr:usesMechanism rr:Mechanism_shex
+  ; rr:hasTypingNodeSupport rr:YesSupport
+  ; rr:hasCardinalitySupport rr:YesSupport
+  ; rr:hasValueConstraintSupport rr:YesSupport
+  ; rr:hasKeySupport rr:NoSupport
+  ; rr:hasPathConstraintSupport rr:NoSupport
+  ; rr:hasRecursionSupport rr:YesSupport
+  ; rr:hasImplementationSupport rr:PartialSupport
+  ; rr:hasEvaluationSupport rr:NoSupport
+  ; rr:doi "10.1016/j.jbi.2023.104534"
+  ; rr:url "https://doi.org/10.1016/j.jbi.2023.104534"^^xsd:anyURI
+  ; rr:qualityTheoryScore 1
+  ; rr:qualitySystemScore 0 .
+
+inst:Publication_s031 a rr:Publication
+  ; rr:recordId "S031"
+  ; rr:title "Query cost estimation in graph databases via emphasizing query dependencies by using a neural reasoning network"
+  ; rr:publicationYear "2023"^^xsd:gYear
+  ; rr:venue "Concurrency and Computation: Practice and Experience"
+  ; rr:publicationType "Article"
+  ; rr:hasApproachFamily rr:ShapesConstraintsFamily
+  ; rr:hasApproachSubClass rr:ApproachSubClass_unspecified
+  ; rr:targetsModel rr:OtherUnknownTarget
+  ; rr:usesMechanism rr:Mechanism_unspecified
+  ; rr:hasTypingNodeSupport rr:YesSupport
+  ; rr:hasCardinalitySupport rr:YesSupport
+  ; rr:hasValueConstraintSupport rr:PartialSupport
+  ; rr:hasKeySupport rr:PartialSupport
+  ; rr:hasPathConstraintSupport rr:NoSupport
+  ; rr:hasRecursionSupport rr:NoSupport
+  ; rr:hasImplementationSupport rr:NotSpecifiedSupport
+  ; rr:hasEvaluationSupport rr:NoSupport
+  ; rr:doi "10.1002/cpe.7817"
+  ; rr:url "https://doi.org/10.1002/cpe.7817"^^xsd:anyURI
+  ; rr:qualityTheoryScore 1
+  ; rr:qualitySystemScore 0 .
+
+inst:Publication_s032 a rr:Publication
+  ; rr:recordId "S032"
+  ; rr:title "Automating the use of Shape Expressions for the validation of semantic knowledge in Wikidata"
+  ; rr:publicationYear "2023"^^xsd:gYear
+  ; rr:venue "CEUR Workshop Proceedings"
+  ; rr:publicationType "Conference paper"
+  ; rr:hasApproachFamily rr:ShapesConstraintsFamily
+  ; rr:hasApproachSubClass rr:ApproachSubClass_shex
+  ; rr:targetsModel rr:RDFTarget
+  ; rr:usesMechanism rr:Mechanism_shex
+  ; rr:hasTypingNodeSupport rr:YesSupport
+  ; rr:hasCardinalitySupport rr:YesSupport
+  ; rr:hasValueConstraintSupport rr:YesSupport
+  ; rr:hasKeySupport rr:NoSupport
+  ; rr:hasPathConstraintSupport rr:NoSupport
+  ; rr:hasRecursionSupport rr:YesSupport
+  ; rr:hasImplementationSupport rr:YesSupport
+  ; rr:hasEvaluationSupport rr:NoSupport
+  ; rr:url "https://www.scopus.com/inward/record.uri?eid=2-s2.0-85185893919&partnerID=40&md5=c53bcd3c2f70b9b87fafaa6b3ad59f7b"^^xsd:anyURI
+  ; rr:qualityTheoryScore 1
+  ; rr:qualitySystemScore 0 .
+
+inst:Publication_s033 a rr:Publication
+  ; rr:recordId "S033"
+  ; rr:title "Using Pregel to Create Knowledge Graphs Subsets Described by Non-recursive Shape Expressions"
+  ; rr:publicationYear "2023"^^xsd:gYear
+  ; rr:venue "Lecture Notes in Computer Science (including subseries Lecture Notes in Artificial Intelligence and Lecture Notes in Bioinformatics)"
+  ; rr:publicationType "Conference paper"
+  ; rr:hasApproachFamily rr:ShapesConstraintsFamily
+  ; rr:hasApproachSubClass rr:ApproachSubClass_shex
+  ; rr:targetsModel rr:RDFTarget
+  ; rr:usesMechanism rr:Mechanism_shex
+  ; rr:hasTypingNodeSupport rr:YesSupport
+  ; rr:hasCardinalitySupport rr:YesSupport
+  ; rr:hasValueConstraintSupport rr:YesSupport
+  ; rr:hasKeySupport rr:NoSupport
+  ; rr:hasPathConstraintSupport rr:NoSupport
+  ; rr:hasRecursionSupport rr:YesSupport
+  ; rr:hasImplementationSupport rr:PartialSupport
+  ; rr:hasEvaluationSupport rr:NoSupport
+  ; rr:doi "10.1007/978-3-031-47745-4_10"
+  ; rr:url "https://doi.org/10.1007/978-3-031-47745-4_10"^^xsd:anyURI
+  ; rr:qualityTheoryScore 0
+  ; rr:qualitySystemScore 0 .
+
+inst:Publication_s034 a rr:Publication
+  ; rr:recordId "S034"
+  ; rr:title "SHACL-ACL: Access Control with SHACL"
+  ; rr:publicationYear "2023"^^xsd:gYear
+  ; rr:venue "Lecture Notes in Computer Science (including subseries Lecture Notes in Artificial Intelligence and Lecture Notes in Bioinformatics)"
+  ; rr:publicationType "Conference paper"
+  ; rr:hasApproachFamily rr:ShapesConstraintsFamily
+  ; rr:hasApproachSubClass rr:ApproachSubClass_shacl
+  ; rr:targetsModel rr:RDFTarget
+  ; rr:usesMechanism rr:Mechanism_shacl
+  ; rr:hasTypingNodeSupport rr:YesSupport
+  ; rr:hasCardinalitySupport rr:YesSupport
+  ; rr:hasValueConstraintSupport rr:YesSupport
+  ; rr:hasKeySupport rr:PartialSupport
+  ; rr:hasPathConstraintSupport rr:YesSupport
+  ; rr:hasRecursionSupport rr:PartialSupport
+  ; rr:hasImplementationSupport rr:PartialSupport
+  ; rr:hasEvaluationSupport rr:NoSupport
+  ; rr:doi "10.1007/978-3-031-43458-7_4"
+  ; rr:url "https://doi.org/10.1007/978-3-031-43458-7_4"^^xsd:anyURI
+  ; rr:qualityTheoryScore 0
+  ; rr:qualitySystemScore 0 .
+
+inst:Publication_s035 a rr:Publication
+  ; rr:recordId "S035"
+  ; rr:title "SHAPEness: A SHACL-Driven Metadata Editor"
+  ; rr:publicationYear "2023"^^xsd:gYear
+  ; rr:venue "Communications in Computer and Information Science"
+  ; rr:publicationType "Conference paper"
+  ; rr:hasApproachFamily rr:ShapesConstraintsFamily
+  ; rr:hasApproachSubClass rr:ApproachSubClass_shacl
+  ; rr:targetsModel rr:RDFTarget
+  ; rr:usesMechanism rr:Mechanism_shacl
+  ; rr:hasTypingNodeSupport rr:YesSupport
+  ; rr:hasCardinalitySupport rr:YesSupport
+  ; rr:hasValueConstraintSupport rr:YesSupport
+  ; rr:hasKeySupport rr:PartialSupport
+  ; rr:hasPathConstraintSupport rr:YesSupport
+  ; rr:hasRecursionSupport rr:PartialSupport
+  ; rr:hasImplementationSupport rr:PartialSupport
+  ; rr:hasEvaluationSupport rr:NoSupport
+  ; rr:doi "10.1007/978-3-031-39141-5_23"
+  ; rr:url "https://doi.org/10.1007/978-3-031-39141-5_23"^^xsd:anyURI
+  ; rr:qualityTheoryScore 0
+  ; rr:qualitySystemScore 0 .
+
+inst:Publication_s036 a rr:Publication
+  ; rr:recordId "S036"
+  ; rr:title "The Quest for Schemas in Graph Databases"
+  ; rr:publicationYear "2023"^^xsd:gYear
+  ; rr:venue "CEUR Workshop Proceedings"
+  ; rr:publicationType "Conference paper"
+  ; rr:hasApproachFamily rr:ShapesConstraintsFamily
+  ; rr:hasApproachSubClass rr:ApproachSubClass_graphschema
+  ; rr:targetsModel rr:PropertyGraphTarget
+  ; rr:usesMechanism rr:Mechanism_graphschema
+  ; rr:hasTypingNodeSupport rr:YesSupport
+  ; rr:hasCardinalitySupport rr:YesSupport
+  ; rr:hasValueConstraintSupport rr:PartialSupport
+  ; rr:hasKeySupport rr:PartialSupport
+  ; rr:hasPathConstraintSupport rr:NoSupport
+  ; rr:hasRecursionSupport rr:NoSupport
+  ; rr:hasImplementationSupport rr:NotSpecifiedSupport
+  ; rr:hasEvaluationSupport rr:NoSupport
+  ; rr:url "https://www.scopus.com/inward/record.uri?eid=2-s2.0-85153346024&partnerID=40&md5=0dc829d96ff3321def83797208204e25"^^xsd:anyURI
+  ; rr:qualityTheoryScore 1
+  ; rr:qualitySystemScore 0 .
+
+inst:Publication_s037 a rr:Publication
+  ; rr:recordId "S037"
+  ; rr:title "Learning SHACL shapes from knowledge graphs"
+  ; rr:publicationYear "2022"^^xsd:gYear
+  ; rr:venue "Semantic Web"
+  ; rr:publicationType "Article"
+  ; rr:hasApproachFamily rr:ShapesConstraintsFamily
+  ; rr:hasApproachSubClass rr:ApproachSubClass_shacl
+  ; rr:targetsModel rr:RDFTarget
+  ; rr:usesMechanism rr:Mechanism_shacl
+  ; rr:hasTypingNodeSupport rr:YesSupport
+  ; rr:hasCardinalitySupport rr:YesSupport
+  ; rr:hasValueConstraintSupport rr:YesSupport
+  ; rr:hasKeySupport rr:PartialSupport
+  ; rr:hasPathConstraintSupport rr:YesSupport
+  ; rr:hasRecursionSupport rr:PartialSupport
+  ; rr:hasImplementationSupport rr:PartialSupport
+  ; rr:hasEvaluationSupport rr:NoSupport
+  ; rr:doi "10.3233/sw-223063"
+  ; rr:url "https://doi.org/10.3233/sw-223063"^^xsd:anyURI
+  ; rr:qualityTheoryScore 0
+  ; rr:qualitySystemScore 0 .
+
+inst:Publication_s038 a rr:Publication
+  ; rr:recordId "S038"
+  ; rr:title "SHACL and ShEx in the Wild: A Community Survey on Validating Shapes Generation and Adoption"
+  ; rr:publicationYear "2022"^^xsd:gYear
+  ; rr:venue "WWW 2022 - Companion Proceedings of the Web Conference 2022"
+  ; rr:publicationType "Conference paper"
+  ; rr:hasApproachFamily rr:ShapesConstraintsFamily
+  ; rr:hasApproachSubClass rr:ApproachSubClass_shacl
+  ; rr:targetsModel rr:RDFTarget
+  ; rr:usesMechanism rr:Mechanism_shacl
+  ; rr:hasTypingNodeSupport rr:YesSupport
+  ; rr:hasCardinalitySupport rr:YesSupport
+  ; rr:hasValueConstraintSupport rr:YesSupport
+  ; rr:hasKeySupport rr:PartialSupport
+  ; rr:hasPathConstraintSupport rr:YesSupport
+  ; rr:hasRecursionSupport rr:PartialSupport
+  ; rr:hasImplementationSupport rr:PartialSupport
+  ; rr:hasEvaluationSupport rr:NoSupport
+  ; rr:doi "10.1145/3487553.3524253"
+  ; rr:url "https://doi.org/10.1145/3487553.3524253"^^xsd:anyURI
+  ; rr:qualityTheoryScore 1
+  ; rr:qualitySystemScore 0 .
+
+inst:Publication_s039 a rr:Publication
+  ; rr:recordId "S039"
+  ; rr:title "FLASc: a formal algebra for labeled property graph schema"
+  ; rr:publicationYear "2022"^^xsd:gYear
+  ; rr:venue "Automated Software Engineering"
+  ; rr:publicationType "Article"
+  ; rr:hasApproachFamily rr:ShapesConstraintsFamily
+  ; rr:hasApproachSubClass rr:ApproachSubClass_pg_schema
+  ; rr:targetsModel rr:PropertyGraphTarget
+  ; rr:usesMechanism rr:Mechanism_pg_schema
+  ; rr:hasTypingNodeSupport rr:YesSupport
+  ; rr:hasCardinalitySupport rr:YesSupport
+  ; rr:hasValueConstraintSupport rr:PartialSupport
+  ; rr:hasKeySupport rr:PartialSupport
+  ; rr:hasPathConstraintSupport rr:NoSupport
+  ; rr:hasRecursionSupport rr:NoSupport
+  ; rr:hasImplementationSupport rr:NotSpecifiedSupport
+  ; rr:hasEvaluationSupport rr:NoSupport
+  ; rr:doi "10.1007/s10515-022-00336-y"
+  ; rr:url "https://doi.org/10.1007/s10515-022-00336-y"^^xsd:anyURI
+  ; rr:qualityTheoryScore 1
+  ; rr:qualitySystemScore 0 .
+
+inst:Publication_s040 a rr:Publication
+  ; rr:recordId "S040"
+  ; rr:title "A RDF Validation Tool Extended On Jena-ShEx"
+  ; rr:publicationYear "2022"^^xsd:gYear
+  ; rr:venue "2022 IEEE 8th International Conference on Computer and Communications, ICCC 2022"
+  ; rr:publicationType "Conference paper"
+  ; rr:hasApproachFamily rr:ShapesConstraintsFamily
+  ; rr:hasApproachSubClass rr:ApproachSubClass_shex
+  ; rr:targetsModel rr:RDFTarget
+  ; rr:usesMechanism rr:Mechanism_shex
+  ; rr:hasTypingNodeSupport rr:YesSupport
+  ; rr:hasCardinalitySupport rr:YesSupport
+  ; rr:hasValueConstraintSupport rr:YesSupport
+  ; rr:hasKeySupport rr:NoSupport
+  ; rr:hasPathConstraintSupport rr:NoSupport
+  ; rr:hasRecursionSupport rr:YesSupport
+  ; rr:hasImplementationSupport rr:YesSupport
+  ; rr:hasEvaluationSupport rr:YesSupport
+  ; rr:doi "10.1109/iccc56324.2022.10065855"
+  ; rr:url "https://doi.org/10.1109/iccc56324.2022.10065855"^^xsd:anyURI
+  ; rr:qualityTheoryScore 2
+  ; rr:qualitySystemScore 2 .
+
+inst:Publication_s041 a rr:Publication
+  ; rr:recordId "S041"
+  ; rr:title "Graph Profiling with Graph Generating Dependencies"
+  ; rr:publicationYear "2022"^^xsd:gYear
+  ; rr:venue "CEUR Workshop Proceedings"
+  ; rr:publicationType "Conference paper"
+  ; rr:hasApproachFamily rr:DependenciesICFamily
+  ; rr:hasApproachSubClass rr:ApproachSubClass_ggds
+  ; rr:targetsModel rr:PropertyGraphTarget
+  ; rr:usesMechanism rr:Mechanism_ggds
+  ; rr:hasTypingNodeSupport rr:PartialSupport
+  ; rr:hasCardinalitySupport rr:PartialSupport
+  ; rr:hasValueConstraintSupport rr:PartialSupport
+  ; rr:hasKeySupport rr:PartialSupport
+  ; rr:hasPathConstraintSupport rr:YesSupport
+  ; rr:hasRecursionSupport rr:NoSupport
+  ; rr:hasImplementationSupport rr:NotSpecifiedSupport
+  ; rr:hasEvaluationSupport rr:NoSupport
+  ; rr:url "https://www.scopus.com/inward/record.uri?eid=2-s2.0-85137140192&partnerID=40&md5=9dc47eb0d103b9409428d4ed1362f6a7"^^xsd:anyURI
+  ; rr:qualityTheoryScore 1
+  ; rr:qualitySystemScore 0 .
+
+inst:Publication_s042 a rr:Publication
+  ; rr:recordId "S042"
+  ; rr:title "SOSA-SHACL: Shapes Constraint for the Sensor, Observation, Sample, and Actuator Ontology"
+  ; rr:publicationYear "2021"^^xsd:gYear
+  ; rr:venue "ACM International Conference Proceeding Series"
+  ; rr:publicationType "Conference paper"
+  ; rr:hasApproachFamily rr:ShapesConstraintsFamily
+  ; rr:hasApproachSubClass rr:ApproachSubClass_shacl
+  ; rr:targetsModel rr:RDFTarget
+  ; rr:usesMechanism rr:Mechanism_shacl
+  ; rr:hasTypingNodeSupport rr:YesSupport
+  ; rr:hasCardinalitySupport rr:YesSupport
+  ; rr:hasValueConstraintSupport rr:YesSupport
+  ; rr:hasKeySupport rr:PartialSupport
+  ; rr:hasPathConstraintSupport rr:YesSupport
+  ; rr:hasRecursionSupport rr:PartialSupport
+  ; rr:hasImplementationSupport rr:PartialSupport
+  ; rr:hasEvaluationSupport rr:NoSupport
+  ; rr:doi "10.1145/3502223.3502235"
+  ; rr:url "https://doi.org/10.1145/3502223.3502235"^^xsd:anyURI
+  ; rr:qualityTheoryScore 1
+  ; rr:qualitySystemScore 0 .
+
+inst:Publication_s043 a rr:Publication
+  ; rr:recordId "S043"
+  ; rr:title "Trav-SHACL: Efficiently validating networks of SHACL constraints"
+  ; rr:publicationYear "2021"^^xsd:gYear
+  ; rr:venue "The Web Conference 2021 - Proceedings of the World Wide Web Conference, WWW 2021"
+  ; rr:publicationType "Conference paper"
+  ; rr:hasApproachFamily rr:ShapesConstraintsFamily
+  ; rr:hasApproachSubClass rr:ApproachSubClass_shacl
+  ; rr:targetsModel rr:RDFTarget
+  ; rr:usesMechanism rr:Mechanism_shacl
+  ; rr:hasTypingNodeSupport rr:YesSupport
+  ; rr:hasCardinalitySupport rr:YesSupport
+  ; rr:hasValueConstraintSupport rr:YesSupport
+  ; rr:hasKeySupport rr:PartialSupport
+  ; rr:hasPathConstraintSupport rr:YesSupport
+  ; rr:hasRecursionSupport rr:PartialSupport
+  ; rr:hasImplementationSupport rr:YesSupport
+  ; rr:hasEvaluationSupport rr:YesSupport
+  ; rr:doi "10.1145/3442381.3449877"
+  ; rr:url "https://doi.org/10.1145/3442381.3449877"^^xsd:anyURI
+  ; rr:qualityTheoryScore 1
+  ; rr:qualitySystemScore 2 .
+
+inst:Publication_s044 a rr:Publication
+  ; rr:recordId "S044"
+  ; rr:title "Extending the Integrity Constraint Support in a Graph Database"
+  ; rr:publicationYear "2021"^^xsd:gYear
+  ; rr:venue "IEEE Latin America Transactions"
+  ; rr:publicationType "Article"
+  ; rr:hasApproachFamily rr:DependenciesICFamily
+  ; rr:hasApproachSubClass rr:ApproachSubClass_integrityconstraints
+  ; rr:targetsModel rr:PropertyGraphTarget
+  ; rr:usesMechanism rr:Mechanism_integrityconstraints
+  ; rr:hasTypingNodeSupport rr:PartialSupport
+  ; rr:hasCardinalitySupport rr:PartialSupport
+  ; rr:hasValueConstraintSupport rr:PartialSupport
+  ; rr:hasKeySupport rr:PartialSupport
+  ; rr:hasPathConstraintSupport rr:PartialSupport
+  ; rr:hasRecursionSupport rr:NoSupport
+  ; rr:hasImplementationSupport rr:NotSpecifiedSupport
+  ; rr:hasEvaluationSupport rr:NoSupport
+  ; rr:doi "10.1109/tla.2021.9448543"
+  ; rr:url "https://doi.org/10.1109/tla.2021.9448543"^^xsd:anyURI
+  ; rr:qualityTheoryScore 1
+  ; rr:qualitySystemScore 0 .
+
+inst:Publication_s045 a rr:Publication
+  ; rr:recordId "S045"
+  ; rr:title "Applying k-vertex cardinality constraints on a Neo4j graph database"
+  ; rr:publicationYear "2021"^^xsd:gYear
+  ; rr:venue "Future Generation Computer Systems"
+  ; rr:publicationType "Article"
+  ; rr:hasApproachFamily rr:ShapesConstraintsFamily
+  ; rr:hasApproachSubClass rr:ApproachSubClass_unspecified
+  ; rr:targetsModel rr:OtherUnknownTarget
+  ; rr:usesMechanism rr:Mechanism_unspecified
+  ; rr:hasTypingNodeSupport rr:YesSupport
+  ; rr:hasCardinalitySupport rr:YesSupport
+  ; rr:hasValueConstraintSupport rr:PartialSupport
+  ; rr:hasKeySupport rr:PartialSupport
+  ; rr:hasPathConstraintSupport rr:NoSupport
+  ; rr:hasRecursionSupport rr:NoSupport
+  ; rr:hasImplementationSupport rr:NotSpecifiedSupport
+  ; rr:hasEvaluationSupport rr:NoSupport
+  ; rr:doi "10.1016/j.future.2020.09.036"
+  ; rr:url "https://doi.org/10.1016/j.future.2020.09.036"^^xsd:anyURI
+  ; rr:qualityTheoryScore 1
+  ; rr:qualitySystemScore 0 .
+
+inst:Publication_s046 a rr:Publication
+  ; rr:recordId "S046"
+  ; rr:title "Visual notations for viewing RDF constraints with UnSHACLed"
+  ; rr:publicationYear "2021"^^xsd:gYear
+  ; rr:venue "Semantic Web"
+  ; rr:publicationType "Article"
+  ; rr:hasApproachFamily rr:ShapesConstraintsFamily
+  ; rr:hasApproachSubClass rr:ApproachSubClass_rdfconstraints
+  ; rr:targetsModel rr:RDFTarget
+  ; rr:usesMechanism rr:Mechanism_rdfconstraints
+  ; rr:hasTypingNodeSupport rr:YesSupport
+  ; rr:hasCardinalitySupport rr:YesSupport
+  ; rr:hasValueConstraintSupport rr:PartialSupport
+  ; rr:hasKeySupport rr:PartialSupport
+  ; rr:hasPathConstraintSupport rr:NoSupport
+  ; rr:hasRecursionSupport rr:NoSupport
+  ; rr:hasImplementationSupport rr:NotSpecifiedSupport
+  ; rr:hasEvaluationSupport rr:NoSupport
+  ; rr:doi "10.3233/sw-210450"
+  ; rr:url "https://doi.org/10.3233/sw-210450"^^xsd:anyURI
+  ; rr:qualityTheoryScore 1
+  ; rr:qualitySystemScore 0 .
+
+inst:Publication_s047 a rr:Publication
+  ; rr:recordId "S047"
+  ; rr:title "SHACL constraint validation during SPARQL query processing"
+  ; rr:publicationYear "2021"^^xsd:gYear
+  ; rr:venue "CEUR Workshop Proceedings"
+  ; rr:publicationType "Conference paper"
+  ; rr:hasApproachFamily rr:ShapesConstraintsFamily
+  ; rr:hasApproachSubClass rr:ApproachSubClass_shacl
+  ; rr:targetsModel rr:RDFTarget
+  ; rr:usesMechanism rr:Mechanism_shacl
+  ; rr:hasTypingNodeSupport rr:YesSupport
+  ; rr:hasCardinalitySupport rr:YesSupport
+  ; rr:hasValueConstraintSupport rr:YesSupport
+  ; rr:hasKeySupport rr:PartialSupport
+  ; rr:hasPathConstraintSupport rr:YesSupport
+  ; rr:hasRecursionSupport rr:PartialSupport
+  ; rr:hasImplementationSupport rr:YesSupport
+  ; rr:hasEvaluationSupport rr:NoSupport
+  ; rr:url "https://www.scopus.com/inward/record.uri?eid=2-s2.0-85117054341&partnerID=40&md5=a117d2da05d14f1b4d3c7e4d09d2c7ad"^^xsd:anyURI
+  ; rr:qualityTheoryScore 1
+  ; rr:qualitySystemScore 0 .
+
+inst:Publication_s048 a rr:Publication
+  ; rr:recordId "S048"
+  ; rr:title "Incremental Validation of RDF Graphs"
+  ; rr:publicationYear "2021"^^xsd:gYear
+  ; rr:venue "Lecture Notes in Computer Science (including subseries Lecture Notes in Artificial Intelligence and Lecture Notes in Bioinformatics)"
+  ; rr:publicationType "Conference paper"
+  ; rr:hasApproachFamily rr:ShapesConstraintsFamily
+  ; rr:hasApproachSubClass rr:ApproachSubClass_rdfconstraints
+  ; rr:targetsModel rr:RDFTarget
+  ; rr:usesMechanism rr:Mechanism_rdfconstraints
+  ; rr:hasTypingNodeSupport rr:YesSupport
+  ; rr:hasCardinalitySupport rr:YesSupport
+  ; rr:hasValueConstraintSupport rr:PartialSupport
+  ; rr:hasKeySupport rr:PartialSupport
+  ; rr:hasPathConstraintSupport rr:NoSupport
+  ; rr:hasRecursionSupport rr:NoSupport
+  ; rr:hasImplementationSupport rr:NotSpecifiedSupport
+  ; rr:hasEvaluationSupport rr:NoSupport
+  ; rr:doi "10.1007/978-3-030-87571-8_31"
+  ; rr:url "https://doi.org/10.1007/978-3-030-87571-8_31"^^xsd:anyURI
+  ; rr:qualityTheoryScore 1
+  ; rr:qualitySystemScore 0 .
+
+inst:Publication_s049 a rr:Publication
+  ; rr:recordId "S049"
+  ; rr:title "PG-Keys: Keys for Property Graphs"
+  ; rr:publicationYear "2021"^^xsd:gYear
+  ; rr:venue "Proceedings of the ACM SIGMOD International Conference on Management of Data"
+  ; rr:publicationType "Conference paper"
+  ; rr:hasApproachFamily rr:DependenciesICFamily
+  ; rr:hasApproachSubClass rr:ApproachSubClass_pg_keys
+  ; rr:targetsModel rr:PropertyGraphTarget
+  ; rr:usesMechanism rr:Mechanism_pg_keys
+  ; rr:hasTypingNodeSupport rr:PartialSupport
+  ; rr:hasCardinalitySupport rr:PartialSupport
+  ; rr:hasValueConstraintSupport rr:PartialSupport
+  ; rr:hasKeySupport rr:YesSupport
+  ; rr:hasPathConstraintSupport rr:PartialSupport
+  ; rr:hasRecursionSupport rr:NoSupport
+  ; rr:hasImplementationSupport rr:NotSpecifiedSupport
+  ; rr:hasEvaluationSupport rr:NoSupport
+  ; rr:doi "10.1145/3448016.3457561"
+  ; rr:url "https://doi.org/10.1145/3448016.3457561"^^xsd:anyURI
+  ; rr:qualityTheoryScore 1
+  ; rr:qualitySystemScore 0 .
+
+inst:Publication_s050 a rr:Publication
+  ; rr:recordId "S050"
+  ; rr:title "GGDs: Graph Generating Dependencies"
+  ; rr:publicationYear "2020"^^xsd:gYear
+  ; rr:venue "International Conference on Information and Knowledge Management, Proceedings"
+  ; rr:publicationType "Conference paper"
+  ; rr:hasApproachFamily rr:DependenciesICFamily
+  ; rr:hasApproachSubClass rr:ApproachSubClass_ggds
+  ; rr:targetsModel rr:PropertyGraphTarget
+  ; rr:usesMechanism rr:Mechanism_ggds
+  ; rr:hasTypingNodeSupport rr:PartialSupport
+  ; rr:hasCardinalitySupport rr:PartialSupport
+  ; rr:hasValueConstraintSupport rr:PartialSupport
+  ; rr:hasKeySupport rr:PartialSupport
+  ; rr:hasPathConstraintSupport rr:YesSupport
+  ; rr:hasRecursionSupport rr:NoSupport
+  ; rr:hasImplementationSupport rr:NotSpecifiedSupport
+  ; rr:hasEvaluationSupport rr:NoSupport
+  ; rr:doi "10.1145/3340531.3412149"
+  ; rr:url "https://doi.org/10.1145/3340531.3412149"^^xsd:anyURI
+  ; rr:qualityTheoryScore 1
+  ; rr:qualitySystemScore 0 .
+
+inst:Publication_s051 a rr:Publication
+  ; rr:recordId "S051"
+  ; rr:title "Sch\u00edmatos: A SHACL-Based Web-Form Generator for Knowledge Graph Editing"
+  ; rr:publicationYear "2020"^^xsd:gYear
+  ; rr:venue "Lecture Notes in Computer Science (including subseries Lecture Notes in Artificial Intelligence and Lecture Notes in Bioinformatics)"
+  ; rr:publicationType "Conference paper"
+  ; rr:hasApproachFamily rr:ShapesConstraintsFamily
+  ; rr:hasApproachSubClass rr:ApproachSubClass_shacl
+  ; rr:targetsModel rr:RDFTarget
+  ; rr:usesMechanism rr:Mechanism_shacl
+  ; rr:hasTypingNodeSupport rr:YesSupport
+  ; rr:hasCardinalitySupport rr:YesSupport
+  ; rr:hasValueConstraintSupport rr:YesSupport
+  ; rr:hasKeySupport rr:PartialSupport
+  ; rr:hasPathConstraintSupport rr:YesSupport
+  ; rr:hasRecursionSupport rr:PartialSupport
+  ; rr:hasImplementationSupport rr:PartialSupport
+  ; rr:hasEvaluationSupport rr:NoSupport
+  ; rr:doi "10.1007/978-3-030-62466-8_5"
+  ; rr:url "https://doi.org/10.1007/978-3-030-62466-8_5"^^xsd:anyURI
+  ; rr:qualityTheoryScore 0
+  ; rr:qualitySystemScore 0 .
+
+inst:Publication_s052 a rr:Publication
+  ; rr:recordId "S052"
+  ; rr:title "On2ts - Typescript generation from OWL ontologies and SHACL"
+  ; rr:publicationYear "2020"^^xsd:gYear
+  ; rr:venue "CEUR Workshop Proceedings"
+  ; rr:publicationType "Conference paper"
+  ; rr:hasApproachFamily rr:SemanticSchemaFamily
+  ; rr:hasApproachSubClass rr:ApproachSubClass_owl_rdfs
+  ; rr:targetsModel rr:RDFTarget
+  ; rr:usesMechanism rr:Mechanism_owl_rdfs
+  ; rr:hasTypingNodeSupport rr:YesSupport
+  ; rr:hasCardinalitySupport rr:PartialSupport
+  ; rr:hasValueConstraintSupport rr:PartialSupport
+  ; rr:hasKeySupport rr:PartialSupport
+  ; rr:hasPathConstraintSupport rr:PartialSupport
+  ; rr:hasRecursionSupport rr:PartialSupport
+  ; rr:hasImplementationSupport rr:PartialSupport
+  ; rr:hasEvaluationSupport rr:NoSupport
+  ; rr:url "https://www.scopus.com/inward/record.uri?eid=2-s2.0-85096234612&partnerID=40&md5=a0031e874d9a8cdb24068bd256eea761"^^xsd:anyURI
+  ; rr:qualityTheoryScore 0
+  ; rr:qualitySystemScore 0 .
+
+inst:Publication_s053 a rr:Publication
+  ; rr:recordId "S053"
+  ; rr:title "Towards SHACL learning from knowledge graphs"
+  ; rr:publicationYear "2020"^^xsd:gYear
+  ; rr:venue "CEUR Workshop Proceedings"
+  ; rr:publicationType "Conference paper"
+  ; rr:hasApproachFamily rr:ShapesConstraintsFamily
+  ; rr:hasApproachSubClass rr:ApproachSubClass_shacl
+  ; rr:targetsModel rr:RDFTarget
+  ; rr:usesMechanism rr:Mechanism_shacl
+  ; rr:hasTypingNodeSupport rr:YesSupport
+  ; rr:hasCardinalitySupport rr:YesSupport
+  ; rr:hasValueConstraintSupport rr:YesSupport
+  ; rr:hasKeySupport rr:PartialSupport
+  ; rr:hasPathConstraintSupport rr:YesSupport
+  ; rr:hasRecursionSupport rr:PartialSupport
+  ; rr:hasImplementationSupport rr:PartialSupport
+  ; rr:hasEvaluationSupport rr:NoSupport
+  ; rr:url "https://www.scopus.com/inward/record.uri?eid=2-s2.0-85096229605&partnerID=40&md5=463df6e87b0e33d75c8e9800c6a43a23"^^xsd:anyURI
+  ; rr:qualityTheoryScore 0
+  ; rr:qualitySystemScore 0 .
+
+inst:Publication_s054 a rr:Publication
+  ; rr:recordId "S054"
+  ; rr:title "Modeling and enforcing integrity constraints on graph databases"
+  ; rr:publicationYear "2020"^^xsd:gYear
+  ; rr:venue "Lecture Notes in Computer Science (including subseries Lecture Notes in Artificial Intelligence and Lecture Notes in Bioinformatics)"
+  ; rr:publicationType "Conference paper"
+  ; rr:hasApproachFamily rr:DependenciesICFamily
+  ; rr:hasApproachSubClass rr:ApproachSubClass_integrityconstraints
+  ; rr:targetsModel rr:PropertyGraphTarget
+  ; rr:usesMechanism rr:Mechanism_integrityconstraints
+  ; rr:hasTypingNodeSupport rr:PartialSupport
+  ; rr:hasCardinalitySupport rr:PartialSupport
+  ; rr:hasValueConstraintSupport rr:PartialSupport
+  ; rr:hasKeySupport rr:PartialSupport
+  ; rr:hasPathConstraintSupport rr:PartialSupport
+  ; rr:hasRecursionSupport rr:NoSupport
+  ; rr:hasImplementationSupport rr:NotSpecifiedSupport
+  ; rr:hasEvaluationSupport rr:NoSupport
+  ; rr:doi "10.1007/978-3-030-59003-1_18"
+  ; rr:url "https://doi.org/10.1007/978-3-030-59003-1_18"^^xsd:anyURI
+  ; rr:qualityTheoryScore 1
+  ; rr:qualitySystemScore 0 .
+
+inst:Publication_s055 a rr:Publication
+  ; rr:recordId "S055"
+  ; rr:title "Benchmark for Performance Evaluation of SHACL Implementations in Graph Databases"
+  ; rr:publicationYear "2020"^^xsd:gYear
+  ; rr:venue "Lecture Notes in Computer Science (including subseries Lecture Notes in Artificial Intelligence and Lecture Notes in Bioinformatics)"
+  ; rr:publicationType "Conference paper"
+  ; rr:hasApproachFamily rr:ShapesConstraintsFamily
+  ; rr:hasApproachSubClass rr:ApproachSubClass_shacl
+  ; rr:targetsModel rr:RDFTarget
+  ; rr:usesMechanism rr:Mechanism_shacl
+  ; rr:hasTypingNodeSupport rr:YesSupport
+  ; rr:hasCardinalitySupport rr:YesSupport
+  ; rr:hasValueConstraintSupport rr:YesSupport
+  ; rr:hasKeySupport rr:PartialSupport
+  ; rr:hasPathConstraintSupport rr:YesSupport
+  ; rr:hasRecursionSupport rr:PartialSupport
+  ; rr:hasImplementationSupport rr:YesSupport
+  ; rr:hasEvaluationSupport rr:YesSupport
+  ; rr:doi "10.1007/978-3-030-57977-7_6"
+  ; rr:url "https://doi.org/10.1007/978-3-030-57977-7_6"^^xsd:anyURI
+  ; rr:qualityTheoryScore 1
+  ; rr:qualitySystemScore 2 .
+
+inst:Publication_s056 a rr:Publication
+  ; rr:recordId "S056"
+  ; rr:title "Astrea: Automatic Generation of SHACL Shapes from Ontologies"
+  ; rr:publicationYear "2020"^^xsd:gYear
+  ; rr:venue "Lecture Notes in Computer Science (including subseries Lecture Notes in Artificial Intelligence and Lecture Notes in Bioinformatics)"
+  ; rr:publicationType "Conference paper"
+  ; rr:hasApproachFamily rr:ShapesConstraintsFamily
+  ; rr:hasApproachSubClass rr:ApproachSubClass_shacl
+  ; rr:targetsModel rr:RDFTarget
+  ; rr:usesMechanism rr:Mechanism_shacl
+  ; rr:hasTypingNodeSupport rr:YesSupport
+  ; rr:hasCardinalitySupport rr:YesSupport
+  ; rr:hasValueConstraintSupport rr:YesSupport
+  ; rr:hasKeySupport rr:PartialSupport
+  ; rr:hasPathConstraintSupport rr:YesSupport
+  ; rr:hasRecursionSupport rr:PartialSupport
+  ; rr:hasImplementationSupport rr:PartialSupport
+  ; rr:hasEvaluationSupport rr:NoSupport
+  ; rr:doi "10.1007/978-3-030-49461-2_29"
+  ; rr:url "https://doi.org/10.1007/978-3-030-49461-2_29"^^xsd:anyURI
+  ; rr:qualityTheoryScore 0
+  ; rr:qualitySystemScore 0 .
+
+inst:Publication_s057 a rr:Publication
+  ; rr:recordId "S057"
+  ; rr:title "Schema validation and evolution for graph databases"
+  ; rr:publicationYear "2019"^^xsd:gYear
+  ; rr:venue "Lecture Notes in Computer Science (including subseries Lecture Notes in Artificial Intelligence and Lecture Notes in Bioinformatics)"
+  ; rr:publicationType "Conference paper"
+  ; rr:hasApproachFamily rr:ShapesConstraintsFamily
+  ; rr:hasApproachSubClass rr:ApproachSubClass_graphschema
+  ; rr:targetsModel rr:PropertyGraphTarget
+  ; rr:usesMechanism rr:Mechanism_graphschema
+  ; rr:hasTypingNodeSupport rr:YesSupport
+  ; rr:hasCardinalitySupport rr:YesSupport
+  ; rr:hasValueConstraintSupport rr:PartialSupport
+  ; rr:hasKeySupport rr:PartialSupport
+  ; rr:hasPathConstraintSupport rr:NoSupport
+  ; rr:hasRecursionSupport rr:NoSupport
+  ; rr:hasImplementationSupport rr:NotSpecifiedSupport
+  ; rr:hasEvaluationSupport rr:NoSupport
+  ; rr:doi "10.1007/978-3-030-33223-5_37"
+  ; rr:url "https://doi.org/10.1007/978-3-030-33223-5_37"^^xsd:anyURI
+  ; rr:qualityTheoryScore 1
+  ; rr:qualitySystemScore 0 .
+
+inst:Publication_s058 a rr:Publication
+  ; rr:recordId "S058"
+  ; rr:title "Validation of SHACL constraints over KGs with OWL 2 QL ontologies via rewriting"
+  ; rr:publicationYear "2019"^^xsd:gYear
+  ; rr:venue "Lecture Notes in Computer Science (including subseries Lecture Notes in Artificial Intelligence and Lecture Notes in Bioinformatics)"
+  ; rr:publicationType "Conference paper"
+  ; rr:hasApproachFamily rr:SemanticSchemaFamily
+  ; rr:hasApproachSubClass rr:ApproachSubClass_owl_rdfs
+  ; rr:targetsModel rr:RDFTarget
+  ; rr:usesMechanism rr:Mechanism_owl_rdfs
+  ; rr:hasTypingNodeSupport rr:YesSupport
+  ; rr:hasCardinalitySupport rr:PartialSupport
+  ; rr:hasValueConstraintSupport rr:PartialSupport
+  ; rr:hasKeySupport rr:PartialSupport
+  ; rr:hasPathConstraintSupport rr:PartialSupport
+  ; rr:hasRecursionSupport rr:PartialSupport
+  ; rr:hasImplementationSupport rr:PartialSupport
+  ; rr:hasEvaluationSupport rr:NoSupport
+  ; rr:doi "10.1007/978-3-030-21348-0_21"
+  ; rr:url "https://doi.org/10.1007/978-3-030-21348-0_21"^^xsd:anyURI
+  ; rr:qualityTheoryScore 1
+  ; rr:qualitySystemScore 0 .
+
+inst:Publication_s059 a rr:Publication
+  ; rr:recordId "S059"
+  ; rr:title "RDF shape induction using knowledge base profiling"
+  ; rr:publicationYear "2018"^^xsd:gYear
+  ; rr:venue "Proceedings of the ACM Symposium on Applied Computing"
+  ; rr:publicationType "Conference paper"
+  ; rr:hasApproachFamily rr:ShapesConstraintsFamily
+  ; rr:hasApproachSubClass rr:ApproachSubClass_rdfconstraints
+  ; rr:targetsModel rr:RDFTarget
+  ; rr:usesMechanism rr:Mechanism_rdfconstraints
+  ; rr:hasTypingNodeSupport rr:YesSupport
+  ; rr:hasCardinalitySupport rr:YesSupport
+  ; rr:hasValueConstraintSupport rr:PartialSupport
+  ; rr:hasKeySupport rr:PartialSupport
+  ; rr:hasPathConstraintSupport rr:NoSupport
+  ; rr:hasRecursionSupport rr:NoSupport
+  ; rr:hasImplementationSupport rr:NotSpecifiedSupport
+  ; rr:hasEvaluationSupport rr:NoSupport
+  ; rr:doi "10.1145/3167132.3167341"
+  ; rr:url "https://doi.org/10.1145/3167132.3167341"^^xsd:anyURI
+  ; rr:qualityTheoryScore 0
+  ; rr:qualitySystemScore 0 .
+
+inst:Publication_s060 a rr:Publication
+  ; rr:recordId "S060"
+  ; rr:title "Inference of latent shape expressions associated to DBpedia ontology"
+  ; rr:publicationYear "2018"^^xsd:gYear
+  ; rr:venue "CEUR Workshop Proceedings"
+  ; rr:publicationType "Conference paper"
+  ; rr:hasApproachFamily rr:ShapesConstraintsFamily
+  ; rr:hasApproachSubClass rr:ApproachSubClass_shex
+  ; rr:targetsModel rr:RDFTarget
+  ; rr:usesMechanism rr:Mechanism_shex
+  ; rr:hasTypingNodeSupport rr:YesSupport
+  ; rr:hasCardinalitySupport rr:YesSupport
+  ; rr:hasValueConstraintSupport rr:YesSupport
+  ; rr:hasKeySupport rr:NoSupport
+  ; rr:hasPathConstraintSupport rr:NoSupport
+  ; rr:hasRecursionSupport rr:YesSupport
+  ; rr:hasImplementationSupport rr:PartialSupport
+  ; rr:hasEvaluationSupport rr:NoSupport
+  ; rr:url "https://www.scopus.com/inward/record.uri?eid=2-s2.0-85055350483&partnerID=40&md5=40a4060823f8626e75b4a70bca1527db"^^xsd:anyURI
+  ; rr:qualityTheoryScore 0
+  ; rr:qualitySystemScore 0 .
+
+inst:Publication_s061 a rr:Publication
+  ; rr:recordId "S061"
+  ; rr:title "Towards improving the quality of knowledge graphs with data-driven ontology patterns and SHACL"
+  ; rr:publicationYear "2018"^^xsd:gYear
+  ; rr:venue "CEUR Workshop Proceedings"
+  ; rr:publicationType "Conference paper"
+  ; rr:hasApproachFamily rr:ShapesConstraintsFamily
+  ; rr:hasApproachSubClass rr:ApproachSubClass_shacl
+  ; rr:targetsModel rr:RDFTarget
+  ; rr:usesMechanism rr:Mechanism_shacl
+  ; rr:hasTypingNodeSupport rr:YesSupport
+  ; rr:hasCardinalitySupport rr:YesSupport
+  ; rr:hasValueConstraintSupport rr:YesSupport
+  ; rr:hasKeySupport rr:PartialSupport
+  ; rr:hasPathConstraintSupport rr:YesSupport
+  ; rr:hasRecursionSupport rr:PartialSupport
+  ; rr:hasImplementationSupport rr:PartialSupport
+  ; rr:hasEvaluationSupport rr:NoSupport
+  ; rr:url "https://www.scopus.com/inward/record.uri?eid=2-s2.0-85053802905&partnerID=40&md5=d748214a238a4714dc9b3347169cc5fa"^^xsd:anyURI
+  ; rr:qualityTheoryScore 0
+  ; rr:qualitySystemScore 0 .
+
+inst:Publication_s062 a rr:Publication
+  ; rr:recordId "S062"
+  ; rr:title "Modeling Graph Database Schema"
+  ; rr:publicationYear "2017"^^xsd:gYear
+  ; rr:venue "IT Professional"
+  ; rr:publicationType "Article"
+  ; rr:hasApproachFamily rr:ShapesConstraintsFamily
+  ; rr:hasApproachSubClass rr:ApproachSubClass_graphschema
+  ; rr:targetsModel rr:PropertyGraphTarget
+  ; rr:usesMechanism rr:Mechanism_graphschema
+  ; rr:hasTypingNodeSupport rr:YesSupport
+  ; rr:hasCardinalitySupport rr:YesSupport
+  ; rr:hasValueConstraintSupport rr:PartialSupport
+  ; rr:hasKeySupport rr:PartialSupport
+  ; rr:hasPathConstraintSupport rr:NoSupport
+  ; rr:hasRecursionSupport rr:NoSupport
+  ; rr:hasImplementationSupport rr:NotSpecifiedSupport
+  ; rr:hasEvaluationSupport rr:NoSupport
+  ; rr:doi "10.1109/mitp.2017.4241458"
+  ; rr:url "https://doi.org/10.1109/mitp.2017.4241458"^^xsd:anyURI
+  ; rr:qualityTheoryScore 1
+  ; rr:qualitySystemScore 0 .
+
+inst:Publication_s063 a rr:Publication
+  ; rr:recordId "S063"
+  ; rr:title "Integrity constraints in graph databases"
+  ; rr:publicationYear "2017"^^xsd:gYear
+  ; rr:venue "Procedia Computer Science"
+  ; rr:publicationType "Conference paper"
+  ; rr:hasApproachFamily rr:DependenciesICFamily
+  ; rr:hasApproachSubClass rr:ApproachSubClass_integrityconstraints
+  ; rr:targetsModel rr:PropertyGraphTarget
+  ; rr:usesMechanism rr:Mechanism_integrityconstraints
+  ; rr:hasTypingNodeSupport rr:PartialSupport
+  ; rr:hasCardinalitySupport rr:PartialSupport
+  ; rr:hasValueConstraintSupport rr:PartialSupport
+  ; rr:hasKeySupport rr:PartialSupport
+  ; rr:hasPathConstraintSupport rr:PartialSupport
+  ; rr:hasRecursionSupport rr:NoSupport
+  ; rr:hasImplementationSupport rr:NotSpecifiedSupport
+  ; rr:hasEvaluationSupport rr:NoSupport
+  ; rr:doi "10.1016/j.procs.2017.05.456"
+  ; rr:url "https://doi.org/10.1016/j.procs.2017.05.456"^^xsd:anyURI
+  ; rr:qualityTheoryScore 1
+  ; rr:qualitySystemScore 0 .
+
+inst:Publication_s064 a rr:Publication
+  ; rr:recordId "S064"
+  ; rr:title "Executing queries over schemaless RDF databases"
+  ; rr:publicationYear "2015"^^xsd:gYear
+  ; rr:venue "Proceedings - International Conference on Data Engineering"
+  ; rr:publicationType "Conference paper"
+  ; rr:hasApproachFamily rr:ShapesConstraintsFamily
+  ; rr:hasApproachSubClass rr:ApproachSubClass_rdfconstraints
+  ; rr:targetsModel rr:RDFTarget
+  ; rr:usesMechanism rr:Mechanism_rdfconstraints
+  ; rr:hasTypingNodeSupport rr:YesSupport
+  ; rr:hasCardinalitySupport rr:YesSupport
+  ; rr:hasValueConstraintSupport rr:PartialSupport
+  ; rr:hasKeySupport rr:PartialSupport
+  ; rr:hasPathConstraintSupport rr:NoSupport
+  ; rr:hasRecursionSupport rr:NoSupport
+  ; rr:hasImplementationSupport rr:NotSpecifiedSupport
+  ; rr:hasEvaluationSupport rr:NoSupport
+  ; rr:doi "10.1109/icde.2015.7113335"
+  ; rr:url "https://doi.org/10.1109/icde.2015.7113335"^^xsd:anyURI
+  ; rr:qualityTheoryScore 1
+  ; rr:qualitySystemScore 0 .
+
+inst:Publication_s065 a rr:Publication
+  ; rr:recordId "S065"
+  ; rr:title "PG-Schema: Schemas for Property Graphs"
+  ; rr:publicationYear "2023"^^xsd:gYear
+  ; rr:venue "Proceedings of the ACM on Management of Data (PACMMOD), Vol. 1, Iss. 2"
+  ; rr:publicationType "research-article"
+  ; rr:hasApproachFamily rr:ShapesConstraintsFamily
+  ; rr:hasApproachSubClass rr:ApproachSubClass_pg_schema
+  ; rr:targetsModel rr:PropertyGraphTarget
+  ; rr:usesMechanism rr:Mechanism_pg_schema
+  ; rr:hasTypingNodeSupport rr:YesSupport
+  ; rr:hasCardinalitySupport rr:YesSupport
+  ; rr:hasValueConstraintSupport rr:PartialSupport
+  ; rr:hasKeySupport rr:PartialSupport
+  ; rr:hasPathConstraintSupport rr:NoSupport
+  ; rr:hasRecursionSupport rr:NoSupport
+  ; rr:hasImplementationSupport rr:NotSpecifiedSupport
+  ; rr:hasEvaluationSupport rr:NoSupport
+  ; rr:doi "10.1145/3589778"
+  ; rr:url "https://doi.org/10.1145/3589778"^^xsd:anyURI
+  ; rr:qualityTheoryScore 1
+  ; rr:qualitySystemScore 0 .
+
+inst:Publication_s066 a rr:Publication
+  ; rr:recordId "S066"
+  ; rr:title "LICS: Towards Theory-Informed Effective Visual Abstraction of Property Graph Schemas"
+  ; rr:publicationYear "2025"^^xsd:gYear
+  ; rr:venue "Proceedings of the ACM on Management of Data (PACMMOD), Vol. 3, Iss. 3"
+  ; rr:publicationType "research-article"
+  ; rr:hasApproachFamily rr:ShapesConstraintsFamily
+  ; rr:hasApproachSubClass rr:ApproachSubClass_pg_schema
+  ; rr:targetsModel rr:PropertyGraphTarget
+  ; rr:usesMechanism rr:Mechanism_pg_schema
+  ; rr:hasTypingNodeSupport rr:YesSupport
+  ; rr:hasCardinalitySupport rr:YesSupport
+  ; rr:hasValueConstraintSupport rr:PartialSupport
+  ; rr:hasKeySupport rr:PartialSupport
+  ; rr:hasPathConstraintSupport rr:NoSupport
+  ; rr:hasRecursionSupport rr:NoSupport
+  ; rr:hasImplementationSupport rr:NotSpecifiedSupport
+  ; rr:hasEvaluationSupport rr:NoSupport
+  ; rr:doi "10.1145/3725410"
+  ; rr:url "https://doi.org/10.1145/3725410"^^xsd:anyURI
+  ; rr:qualityTheoryScore 2
+  ; rr:qualitySystemScore 0 .
+
+inst:Publication_s067 a rr:Publication
+  ; rr:recordId "S067"
+  ; rr:title "Transforming RDF Graphs to Property Graphs using Standardized Schemas"
+  ; rr:publicationYear "2024"^^xsd:gYear
+  ; rr:venue "Proceedings of the ACM on Management of Data (PACMMOD), Volume 2, Issue 6"
+  ; rr:publicationType "research-article"
+  ; rr:hasApproachFamily rr:ShapesConstraintsFamily
+  ; rr:hasApproachSubClass rr:ApproachSubClass_graphschema
+  ; rr:targetsModel rr:PropertyGraphTarget
+  ; rr:usesMechanism rr:Mechanism_graphschema
+  ; rr:hasTypingNodeSupport rr:YesSupport
+  ; rr:hasCardinalitySupport rr:YesSupport
+  ; rr:hasValueConstraintSupport rr:PartialSupport
+  ; rr:hasKeySupport rr:PartialSupport
+  ; rr:hasPathConstraintSupport rr:NoSupport
+  ; rr:hasRecursionSupport rr:NoSupport
+  ; rr:hasImplementationSupport rr:NotSpecifiedSupport
+  ; rr:hasEvaluationSupport rr:NoSupport
+  ; rr:doi "10.1145/3698817"
+  ; rr:url "https://doi.org/10.1145/3698817"^^xsd:anyURI
+  ; rr:qualityTheoryScore 1
+  ; rr:qualitySystemScore 0 .
+
+inst:Publication_s068 a rr:Publication
+  ; rr:recordId "S068"
+  ; rr:title "Magic Shapes for SHACL Validation"
+  ; rr:publicationYear "2022"^^xsd:gYear
+  ; rr:venue "Proc. VLDB Endow. 15(10): 2284\u20132296 (2022)"
+  ; rr:publicationType "nan"
+  ; rr:hasApproachFamily rr:ShapesConstraintsFamily
+  ; rr:hasApproachSubClass rr:ApproachSubClass_shacl
+  ; rr:targetsModel rr:RDFTarget
+  ; rr:usesMechanism rr:Mechanism_shacl
+  ; rr:hasTypingNodeSupport rr:YesSupport
+  ; rr:hasCardinalitySupport rr:YesSupport
+  ; rr:hasValueConstraintSupport rr:YesSupport
+  ; rr:hasKeySupport rr:PartialSupport
+  ; rr:hasPathConstraintSupport rr:YesSupport
+  ; rr:hasRecursionSupport rr:PartialSupport
+  ; rr:hasImplementationSupport rr:YesSupport
+  ; rr:hasEvaluationSupport rr:NoSupport
+  ; rr:qualityTheoryScore 1
+  ; rr:qualitySystemScore 0 .
+
+inst:Publication_s069 a rr:Publication
+  ; rr:recordId "S069"
+  ; rr:title "Reasoning with the Core Chase: the Case of SHACL Validation over ELHI Knowledge Bases"
+  ; rr:publicationYear "2024"^^xsd:gYear
+  ; rr:venue "Description Logics 2024"
+  ; rr:publicationType "nan"
+  ; rr:hasApproachFamily rr:ShapesConstraintsFamily
+  ; rr:hasApproachSubClass rr:ApproachSubClass_shacl
+  ; rr:targetsModel rr:RDFTarget
+  ; rr:usesMechanism rr:Mechanism_shacl
+  ; rr:hasTypingNodeSupport rr:YesSupport
+  ; rr:hasCardinalitySupport rr:YesSupport
+  ; rr:hasValueConstraintSupport rr:YesSupport
+  ; rr:hasKeySupport rr:PartialSupport
+  ; rr:hasPathConstraintSupport rr:YesSupport
+  ; rr:hasRecursionSupport rr:PartialSupport
+  ; rr:hasImplementationSupport rr:YesSupport
+  ; rr:hasEvaluationSupport rr:NoSupport
+  ; rr:qualityTheoryScore 1
+  ; rr:qualitySystemScore 0 .
+
+inst:Publication_s070 a rr:Publication
+  ; rr:recordId "S070"
+  ; rr:title "SHACL Validation Under Graph Updates"
+  ; rr:publicationYear "2025"^^xsd:gYear
+  ; rr:venue "ISWC 2025: 140\u2013157"
+  ; rr:publicationType "nan"
+  ; rr:hasApproachFamily rr:ShapesConstraintsFamily
+  ; rr:hasApproachSubClass rr:ApproachSubClass_shacl
+  ; rr:targetsModel rr:RDFTarget
+  ; rr:usesMechanism rr:Mechanism_shacl
+  ; rr:hasTypingNodeSupport rr:YesSupport
+  ; rr:hasCardinalitySupport rr:YesSupport
+  ; rr:hasValueConstraintSupport rr:YesSupport
+  ; rr:hasKeySupport rr:PartialSupport
+  ; rr:hasPathConstraintSupport rr:YesSupport
+  ; rr:hasRecursionSupport rr:PartialSupport
+  ; rr:hasImplementationSupport rr:YesSupport
+  ; rr:hasEvaluationSupport rr:NoSupport
+  ; rr:qualityTheoryScore 1
+  ; rr:qualitySystemScore 0 .
+
+inst:Publication_s072 a rr:Publication
+  ; rr:recordId "S072"
+  ; rr:title "Stable Model Semantics for Recursive SHACL"
+  ; rr:publicationYear "2020"^^xsd:gYear
+  ; rr:venue "WWW 2020: 1570\u20131580"
+  ; rr:publicationType "nan"
+  ; rr:hasApproachFamily rr:ShapesConstraintsFamily
+  ; rr:hasApproachSubClass rr:ApproachSubClass_shacl
+  ; rr:targetsModel rr:RDFTarget
+  ; rr:usesMechanism rr:Mechanism_shacl
+  ; rr:hasTypingNodeSupport rr:YesSupport
+  ; rr:hasCardinalitySupport rr:YesSupport
+  ; rr:hasValueConstraintSupport rr:YesSupport
+  ; rr:hasKeySupport rr:PartialSupport
+  ; rr:hasPathConstraintSupport rr:YesSupport
+  ; rr:hasRecursionSupport rr:YesSupport
+  ; rr:hasImplementationSupport rr:PartialSupport
+  ; rr:hasEvaluationSupport rr:NoSupport
+  ; rr:qualityTheoryScore 1
+  ; rr:qualitySystemScore 0 .
+
+inst:Publication_s074 a rr:Publication
+  ; rr:recordId "S074"
+  ; rr:title "Satisfiability and containment of recursive SHACL"
+  ; rr:publicationYear "2022"^^xsd:gYear
+  ; rr:venue "J. Web Semant. 74: 100721 (2022)"
+  ; rr:publicationType "nan"
+  ; rr:hasApproachFamily rr:ShapesConstraintsFamily
+  ; rr:hasApproachSubClass rr:ApproachSubClass_shacl
+  ; rr:targetsModel rr:RDFTarget
+  ; rr:usesMechanism rr:Mechanism_shacl
+  ; rr:hasTypingNodeSupport rr:YesSupport
+  ; rr:hasCardinalitySupport rr:YesSupport
+  ; rr:hasValueConstraintSupport rr:YesSupport
+  ; rr:hasKeySupport rr:PartialSupport
+  ; rr:hasPathConstraintSupport rr:YesSupport
+  ; rr:hasRecursionSupport rr:YesSupport
+  ; rr:hasImplementationSupport rr:PartialSupport
+  ; rr:hasEvaluationSupport rr:NoSupport
+  ; rr:qualityTheoryScore 0
+  ; rr:qualitySystemScore 0 .
+
+inst:Publication_s075 a rr:Publication
+  ; rr:recordId "S075"
+  ; rr:title "A dual approach to ShEx visualization with complexity management"
+  ; rr:publicationYear "2023"^^xsd:gYear
+  ; rr:venue "CoRR abs/2305.08560 (2023)"
+  ; rr:publicationType "nan"
+  ; rr:hasApproachFamily rr:ShapesConstraintsFamily
+  ; rr:hasApproachSubClass rr:ApproachSubClass_shex
+  ; rr:targetsModel rr:RDFTarget
+  ; rr:usesMechanism rr:Mechanism_shex
+  ; rr:hasTypingNodeSupport rr:YesSupport
+  ; rr:hasCardinalitySupport rr:YesSupport
+  ; rr:hasValueConstraintSupport rr:YesSupport
+  ; rr:hasKeySupport rr:NoSupport
+  ; rr:hasPathConstraintSupport rr:NoSupport
+  ; rr:hasRecursionSupport rr:YesSupport
+  ; rr:hasImplementationSupport rr:PartialSupport
+  ; rr:hasEvaluationSupport rr:NoSupport
+  ; rr:qualityTheoryScore 1
+  ; rr:qualitySystemScore 0 .
+
+inst:Publication_s076 a rr:Publication
+  ; rr:recordId "S076"
+  ; rr:title "Complexity and Expressiveness of ShEx for RDF"
+  ; rr:publicationYear "2015"^^xsd:gYear
+  ; rr:venue "ICDT 2015: 195\u2013211"
+  ; rr:publicationType "nan"
+  ; rr:hasApproachFamily rr:ShapesConstraintsFamily
+  ; rr:hasApproachSubClass rr:ApproachSubClass_shex
+  ; rr:targetsModel rr:RDFTarget
+  ; rr:usesMechanism rr:Mechanism_shex
+  ; rr:hasTypingNodeSupport rr:YesSupport
+  ; rr:hasCardinalitySupport rr:YesSupport
+  ; rr:hasValueConstraintSupport rr:YesSupport
+  ; rr:hasKeySupport rr:NoSupport
+  ; rr:hasPathConstraintSupport rr:NoSupport
+  ; rr:hasRecursionSupport rr:YesSupport
+  ; rr:hasImplementationSupport rr:PartialSupport
+  ; rr:hasEvaluationSupport rr:NoSupport
+  ; rr:qualityTheoryScore 1
+  ; rr:qualitySystemScore 0 .
+
+inst:Publication_s077 a rr:Publication
+  ; rr:recordId "S077"
+  ; rr:title "Defining Schemas for Property Graphs by using the GraphQL Schema Definition Language"
+  ; rr:publicationYear "2019"^^xsd:gYear
+  ; rr:venue "GRADES/NDA@SIGMOD/PODS 2019: 6:1\u20136:11"
+  ; rr:publicationType "nan"
+  ; rr:hasApproachFamily rr:GraphQLReferenceFamily
+  ; rr:hasApproachSubClass rr:ApproachSubClass_graphql
+  ; rr:targetsModel rr:GraphQLTarget
+  ; rr:usesMechanism rr:Mechanism_graphql
+  ; rr:hasTypingNodeSupport rr:PartialSupport
+  ; rr:hasCardinalitySupport rr:PartialSupport
+  ; rr:hasValueConstraintSupport rr:PartialSupport
+  ; rr:hasKeySupport rr:NoSupport
+  ; rr:hasPathConstraintSupport rr:NoSupport
+  ; rr:hasRecursionSupport rr:PartialSupport
+  ; rr:hasImplementationSupport rr:YesSupport
+  ; rr:hasEvaluationSupport rr:NoSupport
+  ; rr:qualityTheoryScore 1
+  ; rr:qualitySystemScore 0 .
+
+inst:Publication_s081 a rr:Publication
+  ; rr:recordId "S081"
+  ; rr:title "Property Graph Schema Optimization for Domain-Specific Knowledge Graphs"
+  ; rr:publicationYear "2021"^^xsd:gYear
+  ; rr:venue "ICDE 2021: 924\u2013935"
+  ; rr:publicationType "nan"
+  ; rr:hasApproachFamily rr:ShapesConstraintsFamily
+  ; rr:hasApproachSubClass rr:ApproachSubClass_pg_schema
+  ; rr:targetsModel rr:PropertyGraphTarget
+  ; rr:usesMechanism rr:Mechanism_pg_schema
+  ; rr:hasTypingNodeSupport rr:YesSupport
+  ; rr:hasCardinalitySupport rr:YesSupport
+  ; rr:hasValueConstraintSupport rr:PartialSupport
+  ; rr:hasKeySupport rr:PartialSupport
+  ; rr:hasPathConstraintSupport rr:NoSupport
+  ; rr:hasRecursionSupport rr:NoSupport
+  ; rr:hasImplementationSupport rr:NotSpecifiedSupport
+  ; rr:hasEvaluationSupport rr:NoSupport
+  ; rr:qualityTheoryScore 1
+  ; rr:qualitySystemScore 0 .
+
+inst:Publication_s082 a rr:Publication
+  ; rr:recordId "S082"
+  ; rr:title "A Formal Design Framework for Practical Property Graph Schema Languages"
+  ; rr:publicationYear "2023"^^xsd:gYear
+  ; rr:venue "EDBT 2023: 478\u2013484"
+  ; rr:publicationType "nan"
+  ; rr:hasApproachFamily rr:ShapesConstraintsFamily
+  ; rr:hasApproachSubClass rr:ApproachSubClass_pg_schema
+  ; rr:targetsModel rr:PropertyGraphTarget
+  ; rr:usesMechanism rr:Mechanism_pg_schema
+  ; rr:hasTypingNodeSupport rr:YesSupport
+  ; rr:hasCardinalitySupport rr:YesSupport
+  ; rr:hasValueConstraintSupport rr:PartialSupport
+  ; rr:hasKeySupport rr:PartialSupport
+  ; rr:hasPathConstraintSupport rr:NoSupport
+  ; rr:hasRecursionSupport rr:NoSupport
+  ; rr:hasImplementationSupport rr:PartialSupport
+  ; rr:hasEvaluationSupport rr:YesSupport
+  ; rr:qualityTheoryScore 2
+  ; rr:qualitySystemScore 2 .
+
+inst:Publication_s087 a rr:Publication
+  ; rr:recordId "S087"
+  ; rr:title "Discovering Graph Functional Dependencies"
+  ; rr:publicationYear "2020"^^xsd:gYear
+  ; rr:venue "ACM Trans. Database Syst. 45(3): 15:1\u201315:42 (2020)"
+  ; rr:publicationType "nan"
+  ; rr:hasApproachFamily rr:DependenciesICFamily
+  ; rr:hasApproachSubClass rr:ApproachSubClass_gfd_fd
+  ; rr:targetsModel rr:PropertyGraphTarget
+  ; rr:usesMechanism rr:Mechanism_gfd_fd
+  ; rr:hasTypingNodeSupport rr:PartialSupport
+  ; rr:hasCardinalitySupport rr:PartialSupport
+  ; rr:hasValueConstraintSupport rr:PartialSupport
+  ; rr:hasKeySupport rr:YesSupport
+  ; rr:hasPathConstraintSupport rr:PartialSupport
+  ; rr:hasRecursionSupport rr:NoSupport
+  ; rr:hasImplementationSupport rr:NotSpecifiedSupport
+  ; rr:hasEvaluationSupport rr:NoSupport
+  ; rr:qualityTheoryScore 1
+  ; rr:qualitySystemScore 0 .
+
+inst:Publication_s088 a rr:Publication
+  ; rr:recordId "S088"
+  ; rr:title "Parallel Reasoning of Graph Functional Dependencies"
+  ; rr:publicationYear "2018"^^xsd:gYear
+  ; rr:venue "ICDE 2018"
+  ; rr:publicationType "nan"
+  ; rr:hasApproachFamily rr:DependenciesICFamily
+  ; rr:hasApproachSubClass rr:ApproachSubClass_gfd_fd
+  ; rr:targetsModel rr:PropertyGraphTarget
+  ; rr:usesMechanism rr:Mechanism_gfd_fd
+  ; rr:hasTypingNodeSupport rr:PartialSupport
+  ; rr:hasCardinalitySupport rr:PartialSupport
+  ; rr:hasValueConstraintSupport rr:PartialSupport
+  ; rr:hasKeySupport rr:YesSupport
+  ; rr:hasPathConstraintSupport rr:PartialSupport
+  ; rr:hasRecursionSupport rr:NoSupport
+  ; rr:hasImplementationSupport rr:NotSpecifiedSupport
+  ; rr:hasEvaluationSupport rr:NoSupport
+  ; rr:qualityTheoryScore 1
+  ; rr:qualitySystemScore 0 .
+
+inst:Publication_s089 a rr:Publication
+  ; rr:recordId "S089"
+  ; rr:title "Dependencies for Graphs"
+  ; rr:publicationYear "2017"^^xsd:gYear
+  ; rr:venue "PODS 2017: 403\u2013416"
+  ; rr:publicationType "nan"
+  ; rr:hasApproachFamily rr:DependenciesICFamily
+  ; rr:hasApproachSubClass rr:ApproachSubClass_graphdependencies
+  ; rr:targetsModel rr:PropertyGraphTarget
+  ; rr:usesMechanism rr:Mechanism_graphdependencies
+  ; rr:hasTypingNodeSupport rr:PartialSupport
+  ; rr:hasCardinalitySupport rr:PartialSupport
+  ; rr:hasValueConstraintSupport rr:PartialSupport
+  ; rr:hasKeySupport rr:PartialSupport
+  ; rr:hasPathConstraintSupport rr:YesSupport
+  ; rr:hasRecursionSupport rr:NoSupport
+  ; rr:hasImplementationSupport rr:NotSpecifiedSupport
+  ; rr:hasEvaluationSupport rr:NoSupport
+  ; rr:qualityTheoryScore 1
+  ; rr:qualitySystemScore 0 .
+
+inst:Publication_s090 a rr:Publication
+  ; rr:recordId "S090"
+  ; rr:title "Dependencies for Graphs: Challenges and Opportunities"
+  ; rr:publicationYear "2019"^^xsd:gYear
+  ; rr:venue "J. Data Inform. Quality 2019"
+  ; rr:publicationType "nan"
+  ; rr:hasApproachFamily rr:DependenciesICFamily
+  ; rr:hasApproachSubClass rr:ApproachSubClass_graphdependencies
+  ; rr:targetsModel rr:PropertyGraphTarget
+  ; rr:usesMechanism rr:Mechanism_graphdependencies
+  ; rr:hasTypingNodeSupport rr:PartialSupport
+  ; rr:hasCardinalitySupport rr:PartialSupport
+  ; rr:hasValueConstraintSupport rr:PartialSupport
+  ; rr:hasKeySupport rr:PartialSupport
+  ; rr:hasPathConstraintSupport rr:YesSupport
+  ; rr:hasRecursionSupport rr:NoSupport
+  ; rr:hasImplementationSupport rr:NotSpecifiedSupport
+  ; rr:hasEvaluationSupport rr:NoSupport
+  ; rr:qualityTheoryScore 1
+  ; rr:qualitySystemScore 0 .
+
+inst:Publication_s094 a rr:Publication
+  ; rr:recordId "S094"
+  ; rr:title "GGDMiner \u2013 Discovery of Graph Generating Dependencies for Graph Data Profiling"
+  ; rr:publicationYear "2024"^^xsd:gYear
+  ; rr:venue "CoRR abs/2403.17082 (2024)"
+  ; rr:publicationType "nan"
+  ; rr:hasApproachFamily rr:DependenciesICFamily
+  ; rr:hasApproachSubClass rr:ApproachSubClass_ggds
+  ; rr:targetsModel rr:PropertyGraphTarget
+  ; rr:usesMechanism rr:Mechanism_ggds
+  ; rr:hasTypingNodeSupport rr:PartialSupport
+  ; rr:hasCardinalitySupport rr:PartialSupport
+  ; rr:hasValueConstraintSupport rr:PartialSupport
+  ; rr:hasKeySupport rr:PartialSupport
+  ; rr:hasPathConstraintSupport rr:YesSupport
+  ; rr:hasRecursionSupport rr:NoSupport
+  ; rr:hasImplementationSupport rr:NotSpecifiedSupport
+  ; rr:hasEvaluationSupport rr:NoSupport
+  ; rr:qualityTheoryScore 1
+  ; rr:qualitySystemScore 0 .
+
+inst:Publication_s095 a rr:Publication
+  ; rr:recordId "S095"
+  ; rr:title "ProGGD \u2013 Data Profiling on Knowledge Graphs using Graph Generating Dependencies"
+  ; rr:publicationYear "2023"^^xsd:gYear
+  ; rr:venue "ISWC (Posters/Demos/Industry) 2023"
+  ; rr:publicationType "nan"
+  ; rr:hasApproachFamily rr:DependenciesICFamily
+  ; rr:hasApproachSubClass rr:ApproachSubClass_ggds
+  ; rr:targetsModel rr:PropertyGraphTarget
+  ; rr:usesMechanism rr:Mechanism_ggds
+  ; rr:hasTypingNodeSupport rr:PartialSupport
+  ; rr:hasCardinalitySupport rr:PartialSupport
+  ; rr:hasValueConstraintSupport rr:PartialSupport
+  ; rr:hasKeySupport rr:PartialSupport
+  ; rr:hasPathConstraintSupport rr:YesSupport
+  ; rr:hasRecursionSupport rr:NoSupport
+  ; rr:hasImplementationSupport rr:NotSpecifiedSupport
+  ; rr:hasEvaluationSupport rr:NoSupport
+  ; rr:qualityTheoryScore 1
+  ; rr:qualitySystemScore 0 .
